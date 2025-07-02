@@ -83,12 +83,56 @@ function initializeAppLogic() {
         const apiData = { 'GitHub': Math.floor(Math.random()*20), 'Jira': Math.floor(Math.random()*5), 'AWS': Math.floor(Math.random()*10) };
         updateMitraCharts(cpuData, apiData);
 
-        const tasks = [
-            { id: 'T-101', desc: 'Implement new login button', status: 'Done' },
-            { id: 'T-102', desc: 'Refactor user authentication', status: 'In Progress' },
-            { id: 'T-103', desc: 'Write unit tests for payment module', status: 'To Do' },
-            { id: 'T-104', desc: 'Fix bug in search functionality', status: 'To Do' }
-        ];
+        let tasks = [];
+        switch(type) {
+            case 'product':
+                tasks = [
+                    { id: 'P-001', desc: 'Define user stories for Feature X', status: 'In Progress' },
+                    { id: 'P-002', desc: 'Analyze market trends for Q3', status: 'To Do' },
+                    { id: 'P-003', desc: 'Review competitor features', status: 'Done' }
+                ];
+                break;
+            case 'architect':
+                tasks = [
+                    { id: 'A-001', desc: 'Design microservice for payments', status: 'In Progress' },
+                    { id: 'A-002', desc: 'Evaluate new database technology', status: 'To Do' },
+                    { id: 'A-003', desc: 'Document API Gateway patterns', status: 'Done' }
+                ];
+                break;
+            case 'dev':
+                tasks = [
+                    { id: 'D-001', desc: 'Implement user login module', status: 'In Progress' },
+                    { id: 'D-002', desc: 'Fix bug in shopping cart', status: 'To Do' },
+                    { id: 'D-003', desc: 'Develop new product page UI', status: 'Done' }
+                ];
+                break;
+            case 'qa':
+                tasks = [
+                    { id: 'Q-001', desc: 'Write test cases for Feature X', status: 'In Progress' },
+                    { id: 'Q-002', desc: 'Perform regression testing', status: 'To Do' },
+                    { id: 'Q-003', desc: 'Automate API tests', status: 'Done' }
+                ];
+                break;
+            case 'secops':
+                tasks = [
+                    { id: 'S-001', desc: 'Conduct security audit of new service', status: 'In Progress' },
+                    { id: 'S-002', desc: 'Review access control policies', status: 'To Do' },
+                    { id: 'S-003', desc: 'Update vulnerability scanner definitions', status: 'Done' }
+                ];
+                break;
+            case 'sre':
+                tasks = [
+                    { id: 'R-001', desc: 'Monitor production environment health', status: 'In Progress' },
+                    { id: 'R-002', desc: 'Optimize database performance', status: 'To Do' },
+                    { id: 'R-003', desc: 'Automate deployment pipeline', status: 'Done' }
+                ];
+                break;
+            default:
+                tasks = [
+                    { id: 'T-001', desc: 'Generic Task 1', status: 'In Progress' },
+                    { id: 'T-002', desc: 'Generic Task 2', status: 'To Do' }
+                ];
+        }
 
         const taskListEl = document.getElementById('mitra-tasks');
         taskListEl.innerHTML = tasks.map(task => `
@@ -147,25 +191,29 @@ function initializeAppLogic() {
             summary: 'SRE-MITRA wants to deploy a new version of the authentication service to the production environment.',
             plan: '1. Run final pre-flight checks.\n2. Apply new Kubernetes config.\n3. Monitor rollout for 5 minutes.\n4. If stable, complete deployment.',
             impact: 'Potential Risk: High. This is a critical user-facing service. A failure could result in login outages.',
-            diff: '<span class="diff-remove">- image: auth-service:v1.1</span>\n<span class="diff-add">+ image: auth-service:v1.2</span>'
+            diff: '<span class="diff-remove">- image: auth-service:v1.1</span>\n<span class="diff-add">+ image: auth-service:v1.2</span>',
+            link: 'https://jenkins.example.com/job/auth-service/build/123', linkText: 'View Jenkins Build'
         },
         'High Code Complexity': {
             summary: 'Developer-MITRA wants to refactor the core billing service.',
             plan: '1. Analyze existing service logic.\n2. Decompose into smaller microservices.\n3. Generate new services and tests.\n4. Propose migration plan.',
             impact: 'Potential Risk: Medium. Refactoring a core service could introduce subtle bugs if not carefully managed.',
-            diff: '<span class="diff-remove">- class BillingService { ... }</span>\n<span class="diff-add">+ class PaymentService { ... }\n+ class InvoiceService { ... }</span>'
+            diff: '<span class="diff-remove">- class BillingService { ... }</span>\n<span class="diff-add">+ class PaymentService { ... }\n+ class InvoiceService { ... }</span>',
+            link: 'https://github.com/example/billing-service/pull/456', linkText: 'View GitHub PR'
         },
         'High Estimated Cost': {
             summary: 'QA-MITRA wants to run a large-scale load test.',
             plan: '1. Provision 50 large EC2 instances.\n2. Run test suite for 60 minutes.\n3. Aggregate results and de-provision instances.',
             impact: 'Potential Risk: Low. Financial cost is the primary concern. No direct impact on production systems.',
-            diff: '<span class="diff-remove">- instance_count: 5</span>\n<span class="diff-add">+ instance_count: 50</span>'
+            diff: '<span class="diff-remove">- instance_count: 5</span>\n<span class="diff-add">+ instance_count: 50</span>',
+            link: 'https://aws.amazon.com/console/cost-explorer', linkText: 'View AWS Cost Explorer'
         },
         'Potential GDPR Compliance Violation': {
             summary: 'Developer-MITRA is attempting to process a dataset containing EU user information in a non-compliant data pipeline.',
             plan: '1. Ingest user_data_eu.csv.\n2. Load into analytics_db_us_east_1.\n3. Run aggregation query.',
             impact: 'Potential Risk: Critical. Processing EU data in a US-based server without proper consent and data transfer agreements is a major GDPR violation, risking significant fines.',
-            diff: '<span class="diff-remove">- target_db: "analytics_db_eu_central_1"</span>\n<span class="diff-add">+ target_db: "analytics_db_us_east_1"</span>'
+            diff: '<span class="diff-remove">- target_db: "analytics_db_eu_central_1"</span>\n<span class="diff-add">+ target_db: "analytics_db_us_east_1"</span>',
+            link: 'https://github.com/example/data-pipeline/pull/789', linkText: 'View GitHub PR'
         }
     };
 
@@ -177,6 +225,9 @@ function initializeAppLogic() {
         document.getElementById('modal-plan').textContent = data.plan || 'No plan available.';
         document.getElementById('modal-impact').textContent = data.impact || 'No impact analysis available.';
         document.getElementById('modal-diff').innerHTML = data.diff || 'No changes to display.';
+        if (data.link) {
+            document.getElementById('modal-diff').innerHTML += `<p class="text-sm mt-2"><a href="${data.link}" target="_blank" class="text-blue-400 hover:underline">${data.linkText || 'View Artifact'}</a></p>`;
+        }
         document.getElementById('intervention-modal').classList.remove('hidden');
     }
     window.showInterventionModal = showInterventionModal;
@@ -253,7 +304,7 @@ function initializeAppLogic() {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             datasets: [
                 { label: 'Monthly Cost (Benchmark)', data: [850, 870, 860, 880, 890, 875], borderColor: chartColors.gray, tension: 0.1, borderDash: [5, 5] },
-                { label: 'MAITRA Cost', data: [840, 710, 550, 480, 450, 430], borderColor: chartColors.teal, fill: true, backgroundColor: 'rgba(63, 185, 80, 0.1)', tension: 0.4 }
+                { label: 'MAITRI Cost', data: [840, 710, 550, 480, 450, 430], borderColor: chartColors.teal, fill: true, backgroundColor: 'rgba(63, 185, 80, 0.1)', tension: 0.4 }
             ]
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { callback: (v) => `$${v}k` } } } }
@@ -393,7 +444,7 @@ function initializeAppLogic() {
             labels: ['Deployment Frequency', 'Lead Time for Changes', 'Time to Restore', 'Change Failure Rate'],
             datasets: [
                 { label: 'Industry Average', data: [5, 4, 5, 6], borderColor: chartColors.gray, backgroundColor: 'rgba(139, 148, 158, 0.2)' },
-                { label: 'MAITRA Performance', data: [9, 8, 9, 8], borderColor: chartColors.green, backgroundColor: 'rgba(63, 185, 80, 0.2)' }
+                { label: 'MAITRI Performance', data: [9, 8, 9, 8], borderColor: chartColors.green, backgroundColor: 'rgba(63, 185, 80, 0.2)' }
             ]
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 10, ticks: { display: false } } } }
@@ -612,8 +663,9 @@ function initializeAppLogic() {
     const interventionRules = [
         { id: 'rule1', name: 'High-Risk Deployment', description: 'Requires approval for production deployments.', status: 'Active', type: 'Action' },
         { id: 'rule2', name: 'Cost Overrun (> $100)', description: 'Intervene if estimated cost exceeds $100.', status: 'Active', type: 'Cost' },
-        { id: 'rule3', name: 'GDPR Compliance Check', description: 'Flag data processing in non-compliant data pipeline.', status: 'Paused', type: 'Compliance' },
-        { id: 'rule4', name: 'High Code Complexity', description: 'Intervene on code changes with high cyclomatic complexity.', status: 'Active', type: 'Quality' }
+        { id: 'rule3', name: 'GDPR Compliance Check', description: 'Flag data processing in non-compliant data pipeline.', status: 'Active', type: 'Compliance' },
+        { id: 'rule4', name: 'High Code Complexity', description: 'Intervene on code changes with high cyclomatic complexity.', status: 'Active', type: 'Quality' },
+        { id: 'rule5', name: 'Unusual Cost Spike', description: 'Pause agent if daily cost exceeds 2x average.', status: 'Paused', type: 'Cost' }
     ];
 
     function renderInterventionRules() {
