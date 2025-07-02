@@ -1,0 +1,45 @@
+
+    <div id="intervention-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+                <h2 id="modal-title" class="text-xl font-bold text-white">Intervention Details</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left Side: Reasoning -->
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Summary</h3>
+                        <p id="modal-summary" class="text-white"></p>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-gray-400">Trigger Reason</h3>
+                        <p id="modal-reason" class="font-semibold highlight-orange"></p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Agent's Plan</h3>
+                        <pre id="modal-plan" class="text-sm bg-[#010409] p-3 rounded-md whitespace-pre-wrap font-mono"></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Impact Analysis</h3>
+                        <p id="modal-impact" class="text-sm text-gray-300"></p>
+                    </div>
+                </div>
+                <!-- Right Side: Diff & Override -->
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Proposed Change (Diff)</h3>
+                        <pre id="modal-diff" class="text-sm bg-[#010409] p-3 rounded-md h-48 overflow-y-auto font-mono"></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Human Override & Comments</h3>
+                        <textarea class="w-full config-textarea mt-1" rows="4" placeholder="Optional: Provide new instructions or comments..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-700 flex justify-end gap-4">
+                <button class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600" onclick="closeModal()">Reject</button>
+                <button class="px-4 py-2 rounded bg-green-600 hover:bg-green-500" onclick="closeModal()">Approve</button>
+            </div>
+        </div>
+    </div>

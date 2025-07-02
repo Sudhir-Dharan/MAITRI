@@ -1,0 +1,63 @@
+
+        <div id="visual-workflow" class="page-content">
+             <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-white">Visual Workflow</h1>
+                <div class="relative">
+                    <button onclick="toggleArtifactDropdown(this)" class="add-artifact-btn px-4 py-2 rounded-md flex items-center gap-2 text-sm">
+                        + Add Agent
+                    </button>
+                    <div class="artifact-dropdown hidden">
+                        <a href="#">Add Product Agent</a>
+                        <a href="#">Add Architect Agent</a>
+                        <a href="#">Add Developer Agent</a>
+                        <a href="#">Add QA Agent</a>
+                    </div>
+                </div>
+            </div>
+             <div class="card p-6 workflow-container">
+                <canvas id="workflow-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                
+                <div id="layer-systems" class="workflow-layer">
+                    <div class="system-node">E-commerce Site</div>
+                    <div class="system-node">Marketing Platform</div>
+                    <div class="system-node">Campaign Engine</div>
+                </div>
+
+                <div id="layer-planning" class="workflow-layer relative">
+                    <div class="flex flex-col items-center">
+                        <h3 class="font-semibold text-gray-400 mb-2">Product</h3>
+                        <div class="flex gap-2">
+                           <div class="workflow-node" onclick="showMitraDetail('Retail PM', 'Defining PRD for checkout', 'product')"><div class="workflow-node-icon text-2xl">📝</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('Analytics PM', 'Defining tracking requirements', 'product')"><div class="workflow-node-icon text-2xl">📈</div></div>
+                        </div>
+                    </div>
+                     <div class="flex flex-col items-center">
+                        <h3 class="font-semibold text-gray-400 mb-2">Architecture</h3>
+                        <div class="flex gap-2">
+                           <div class="workflow-node" onclick="showMitraDetail('FE Architect', 'Designing component library', 'architect')"><div class="workflow-node-icon text-2xl">🎨</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('BE Architect', 'Designing microservices', 'architect')"><div class="workflow-node-icon text-2xl">🏗️</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('Data Architect', 'Designing data schema', 'architect')"><div class="workflow-node-icon text-2xl">🗃️</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="layer-dev" class="workflow-layer relative">
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-1', 'Coding Frontend', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 1</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-2', 'Coding Backend', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 2</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-3', 'Coding API', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 3</p></div>
+                </div>
+
+                <div id="layer-qa" class="workflow-layer relative">
+                    <div class="workflow-node" onclick="showMitraDetail('QA-MITRA-1', 'Testing Frontend', 'qa')"><div class="workflow-node-icon text-2xl">✔️</div><p class="font-semibold text-white text-sm">QA 1</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('QA-MITRA-2', 'Testing API', 'qa')"><div class="workflow-node-icon text-2xl">✔️</div><p class="font-semibold text-white text-sm">QA 2</p></div>
+                </div>
+                
+                <div id="layer-release" class="workflow-layer relative">
+                     <div class="workflow-node" onclick="showMitraDetail('SEC-MITRA', 'Scanning final build', 'secops')"><div class="workflow-node-icon text-2xl">🛡️</div><p class="font-semibold text-white text-sm">SecOps</p></div>
+                     <div class="workflow-node" onclick="showMitraDetail('SRE-MITRA', 'Deploying to Production', 'sre')"><div class="workflow-node-icon text-2xl">🚀</div><p class="font-semibold text-white text-sm">SRE</p></div>
+                </div>
+                 <div class="text-center mt-4">
+                    <p class="text-gray-400">Click on a MITRA agent to see its detailed dashboard.</p>
+                </div>
+             </div>
+        </div>

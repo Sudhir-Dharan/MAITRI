@@ -1,0 +1,63 @@
+
+        <div id="mitra-detail" class="page-content">
+            <button class="mb-6 bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2" onclick="showPage('visual-workflow')">
+                <span class="text-lg">←</span> Back to Workflow
+            </button>
+            <h1 id="mitra-title" class="text-3xl font-bold text-white mb-6"></h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="card p-6">
+                         <h2 class="text-xl font-bold text-white mb-4">Agent Details</h2>
+                         <div class="space-y-4">
+                            <div><p class="text-sm text-gray-400">Status</p><p id="mitra-status" class="font-semibold text-green-400"></p></div>
+                            <div><p class="text-sm text-gray-400">Current Task</p><p id="mitra-task" class="font-semibold text-white"></p></div>
+                            <div><p class="text-sm text-gray-400">Uptime</p><p class="font-semibold text-white">7h 23m</p></div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Deployment Details</h2>
+                        <div class="space-y-4">
+                            <div><p class="text-sm text-gray-400">Cloud Platform</p><p id="mitra-cloud-platform" class="font-semibold text-white"></p></div>
+                            <div><p class="text-sm text-gray-400">Cloud Artifact</p><p id="mitra-cloud-artifact" class="font-semibold text-white"></p></div>
+                        </div>
+                    </div>
+                    <div id="mitra-tasks-container"></div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Configuration</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">LLM Model</label>
+                                <select id="mitra-llm" class="config-select mt-1"></select>
+                            </div>
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">Guiding Principles</label>
+                                <textarea id="mitra-guidelines" class="config-textarea mt-1" rows="5"></textarea>
+                            </div>
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">Context Window</label>
+                                <textarea id="mitra-context" class="config-textarea mt-1" rows="5"></textarea>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500">Save</button>
+                                <button class="w-full bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="lg:col-span-2 space-y-6">
+                     <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Observability Metrics</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="h-64"><canvas id="mitraCpuChart"></canvas></div>
+                            <div class="h-64"><canvas id="mitraApiChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Live Log Stream</h2>
+                        <div id="mitra-log" class="font-mono text-sm space-y-2 h-96 overflow-y-auto bg-[#010409] p-4 rounded-md"></div>
+                    </div>
+                </div>
+            </div>
+        </div>

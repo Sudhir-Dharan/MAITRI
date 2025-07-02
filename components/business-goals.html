@@ -1,0 +1,37 @@
+
+        <div id="business-goals" class="page-content">
+             <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-white">Goals & Initiatives</h1>
+                <div class="relative">
+                    <button onclick="toggleArtifactDropdown(this)" class="add-artifact-btn px-4 py-2 rounded-md flex items-center gap-2 text-sm">
+                        + Add New
+                    </button>
+                    <div class="artifact-dropdown hidden">
+                        <a href="#">Add Business Goal</a>
+                        <a href="#">Add System</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Backlog Column -->
+                <div class="card p-4 kanban-column" id="backlog-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Backlog</h2>
+                    <div id="backlog-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- Prioritized Column -->
+                <div class="card p-4 kanban-column" id="prioritized-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Prioritized</h2>
+                    <div id="prioritized-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- In Progress Column -->
+                <div class="card p-4 kanban-column" id="inprogress-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">In Progress</h2>
+                    <div id="inprogress-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- Completed Column -->
+                <div class="card p-4 kanban-column" id="completed-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Completed</h2>
+                    <div id="completed-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+            </div>
+        </div>

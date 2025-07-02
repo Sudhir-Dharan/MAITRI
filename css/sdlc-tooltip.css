@@ -1,0 +1,15 @@
+
+.kanban-card .sdlc-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 10px;
+    width: 280px;
+    z-index: 30;
+}
+
+.kanban-card:hover .sdlc-tooltip {
+    display: block;
+}

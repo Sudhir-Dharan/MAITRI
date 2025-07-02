@@ -1,0 +1,39 @@
+
+    <aside id="sidebar" class="sidebar w-64 bg-[#010409] p-4 flex flex-col">
+        <div class="mb-8">
+            <h1 id="sidebar-title" class="text-2xl font-bold text-white">MAITRA</h1>
+            <p id="sidebar-subtitle" class="text-xs text-gray-500">Autonomous SDLC Platform</p>
+        </div>
+        <nav class="space-y-2">
+            <a href="#business-goals" class="nav-link" onclick="showPage('business-goals')">
+                <span class="sidebar-icon mr-3">🎯</span> <span class="nav-text">Goals</span>
+            </a>
+            <a href="#operational-dashboard" class="nav-link active" onclick="showPage('operational-dashboard')">
+                <span class="sidebar-icon mr-3">⚙️</span> <span class="nav-text">Console</span>
+            </a>
+            <a href="#visual-workflow" class="nav-link" onclick="showPage('visual-workflow')">
+                <span class="sidebar-icon mr-3">🌐</span> <span class="nav-text">Workflow</span>
+            </a>
+            <a href="#tools-marketplace" class="nav-link" onclick="showPage('tools-marketplace')">
+                <span class="sidebar-icon mr-3">🔧</span> <span class="nav-text">Tools & Marketplace</span>
+            </a>
+             <a href="#executive-dashboard" class="nav-link" onclick="showPage('executive-dashboard')">
+                <span class="sidebar-icon mr-3">💼</span> <span class="nav-text">Reports</span>
+            </a>
+             <a href="#settings" class="nav-link" onclick="showPage('settings')">
+                <span class="sidebar-icon mr-3">🔧</span> <span class="nav-text">Settings</span>
+            </a>
+        </nav>
+        <div class="mt-auto pt-8">
+             <div id="user-profile" class="flex items-center gap-4 mt-4 sm:mt-0">
+                <div class="w-10 h-10 bg-gray-700 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white">SD</div>
+                <div class="nav-text">
+                    <p class="text-sm font-semibold text-white">Sudhir Dharan</p>
+                    <p class="text-xs text-gray-500">CTO</p>
+                </div>
+            </div>
+             <button id="sidebar-toggle" onclick="toggleSidebar()" class="w-full mt-4 text-gray-400 hover:text-white flex items-center justify-center p-2 rounded-md hover:bg-gray-800">
+                <span id="toggle-icon">←</span>
+            </button>
+        </div>
+    </aside>
