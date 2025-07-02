@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAITRA - Autonomous Software Development Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .sidebar {
+            transition: width 0.3s ease-in-out;
+        }
+        .sidebar-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            color: #8b949e;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            background-color: #161b22;
+            color: #c9d1d9;
+        }
+        .nav-link.active {
+            background-color: #0c4a6e; /* blue-900 */
+            color: white;
+            font-weight: 600;
+        }
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+        }
+        .highlight-blue { color: #58a6ff; }
+        .highlight-green { color: #3fb950; }
+        .highlight-orange { color: #f78166; }
+        .highlight-purple { color: #bc8cff; }
+
+        /* Workflow styles */
+        .workflow-container {
+            position: relative;
+        }
+        .workflow-layer {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin: 2.5rem 0;
+        }
+        .workflow-node {
+            text-align: center;
+            z-index: 10;
+        }
+        .workflow-node-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #21262d;
+            border: 2px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .workflow-node-icon:hover {
+            border-color: #58a6ff;
+            transform: scale(1.1);
+        }
+        .system-node {
+             background-color: #0c4a6e;
+             padding: 0.5rem 1rem;
+             border-radius: 0.5rem;
+             border: 1px solid #58a6ff;
+             z-index: 10;
+        }
+        .add-artifact-btn {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #8b949e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .add-artifact-btn:hover {
+            background-color: #30363d;
+            color: white;
+        }
+        .artifact-dropdown {
+            position: absolute;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            z-index: 20;
+            min-width: 180px;
+            right: 0;
+            top: 100%;
+        }
+        .artifact-dropdown a {
+            display: block;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+        .artifact-dropdown a:hover {
+            background-color: #21262d;
+        }
+
+        textarea.config-textarea, input.config-input {
+            background-color: #010409;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-family: monospace;
+            font-size: 0.875rem;
+            color: #c9d1d9;
+            width: 100%;
+        }
+         select.config-select {
+            background-color: #010409;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #c9d1d9;
+            width: 100%;
+        }
+        .filter-select {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+        }
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 1024px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .diff-add { background-color: rgba(63, 185, 80, 0.1); }
+        .diff-remove { background-color: rgba(248, 81, 73, 0.1); }
+
+        /* Drag and Drop Styles */
+        .kanban-column {
+            min-height: 200px;
+        }
+        .kanban-card.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+        }
+        .drag-over {
+            background-color: rgba(88, 166, 255, 0.1);
+            border-style: dashed;
+        }
+        .dashboard-tab {
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        .dashboard-tab.active {
+            border-color: #58a6ff;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        .dashboard-section {
+            display: none;
+        }
+        .dashboard-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar w-64 bg-[#010409] p-4 flex flex-col">
+        <div class="mb-8 flex items-center justify-between">
+            <h1 id="sidebar-title" class="text-2xl font-bold text-white">MAITRA</h1>
+            <p id="sidebar-subtitle" class="text-xs text-gray-500">Autonomous SDLC Platform</p>
+        </div>
+        <nav class="space-y-2">
+            <a href="#business-goals" class="nav-link" onclick="showPage('business-goals')">
+                <span class="sidebar-icon mr-3">🎯</span> <span class="nav-text">Goals</span>
+            </a>
+            <a href="#operational-dashboard" class="nav-link active" onclick="showPage('operational-dashboard')">
+                <span class="sidebar-icon mr-3">⚙️</span> <span class="nav-text">Console</span>
+            </a>
+            <a href="#visual-workflow" class="nav-link" onclick="showPage('visual-workflow')">
+                <span class="sidebar-icon mr-3">🌐</span> <span class="nav-text">Workflow</span>
+            </a>
+            <a href="#tools-marketplace" class="nav-link" onclick="showPage('tools-marketplace')">
+                <span class="sidebar-icon mr-3">🔧</span> <span class="nav-text">Tools & Marketplace</span>
+            </a>
+             <a href="#executive-dashboard" class="nav-link" onclick="showPage('executive-dashboard')">
+                <span class="sidebar-icon mr-3">💼</span> <span class="nav-text">Dashboard</span>
+            </a>
+             <a href="#settings" class="nav-link" onclick="showPage('settings')">
+                <span class="sidebar-icon mr-3">🔧</span> <span class="nav-text">Settings</span>
+            </a>
+        </nav>
+        <div class="mt-auto pt-8">
+             <div id="user-profile" class="flex items-center gap-4 mt-4 sm:mt-0">
+                <div class="w-10 h-10 bg-gray-700 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white">SD</div>
+                <div class="nav-text">
+                    <p class="text-sm font-semibold text-white">Sudhir Dharan</p>
+                    <p class="text-xs text-gray-500">CTO</p>
+                </div>
+            </div>
+             <button id="sidebar-toggle" onclick="toggleSidebar()" class="w-full mt-4 text-gray-400 hover:text-white flex items-center justify-center p-2 rounded-md hover:bg-gray-800">
+                <span id="toggle-icon">←</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+        
+        <!-- Executive Dashboard -->
+        <div id="executive-dashboard" class="page-content">
+            <h1 class="text-3xl font-bold text-white mb-6">Executive Dashboard</h1>
+            
+            <!-- Dashboard Tabs -->
+            <div class="border-b border-gray-700 mb-6">
+                <nav class="flex space-x-4" id="dashboard-tabs">
+                    <button class="dashboard-tab active" onclick="showDashboardSection('financial')">Financial Impact</button>
+                    <button class="dashboard-tab" onclick="showDashboardSection('engineering')">Engineering Metrics</button>
+                    <button class="dashboard-tab" onclick="showDashboardSection('innovation')">Business & Innovation</button>
+                </nav>
+            </div>
+
+            <!-- Financial Section -->
+            <div id="financial-section" class="dashboard-section active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="card p-6">
+                        <p class="text-sm text-gray-400">Projected Annual Savings</p>
+                        <p class="text-3xl font-bold text-white mt-2 highlight-green">$1,247,300</p>
+                    </div>
+                    <div class="card p-6">
+                        <p class="text-sm text-gray-400">Platform ROI</p>
+                        <p class="text-3xl font-bold text-white mt-2 highlight-purple">3.8x</p>
+                    </div>
+                     <div class="card p-6">
+                        <p class="text-sm text-gray-400">Cost Per Feature Shipped</p>
+                        <p class="text-3xl font-bold text-white mt-2 highlight-green">↓ 45%</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                     <h2 class="text-xl font-bold text-white mb-4">Cost Savings Over Time</h2>
+                     <div class="h-96">
+                        <canvas id="costSavingsChart"></canvas>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Engineering Section -->
+            <div id="engineering-section" class="dashboard-section">
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">DORA Metrics Scorecard</h2>
+                        <div class="h-96"><canvas id="doraChart"></canvas></div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Technical Debt Reduction</h2>
+                        <div class="h-96"><canvas id="dashboardTechDebtChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Innovation Section -->
+            <div id="innovation-section" class="dashboard-section">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6 text-center">
+                        <p class="text-sm text-gray-400">Time-to-Market Reduction</p>
+                        <p class="text-5xl font-bold text-white mt-2 highlight-orange">-41 Days</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <p class="text-sm text-gray-400">Features Shipped / Month</p>
+                        <p class="text-5xl font-bold text-white mt-2 highlight-blue">+200%</p>
+                    </div>
+                    <div class="card p-6 md:col-span-2">
+                        <h2 class="text-xl font-bold text-white mb-4">Work Allocation Shift (Dev Time)</h2>
+                        <div class="h-80"><canvas id="workAllocationChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operational Dashboard -->
+        <div id="operational-dashboard" class="page-content">
+             <h1 class="text-3xl font-bold text-white mb-1">SAARATHI Console</h1>
+             <p class="text-gray-400 mb-6">Strategic Approval and Audited Reasoning Assurance with Thresholded Human Intervention</p>
+             <div class="grid grid-cols-12 gap-6">
+                 <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card p-4"><p class="text-sm text-gray-400">Active MITRAs</p><p class="text-3xl font-bold text-white">18</p></div>
+                    <div class="card p-4"><p class="text-sm text-gray-400">Pending Interventions</p><p class="text-3xl font-bold highlight-orange">4</p></div>
+                    <div class="card p-4"><p class="text-sm text-gray-400">System Status</p><div class="flex items-center gap-2"><span class="w-3 h-3 bg-green-500 rounded-full"></span><p class="text-xl font-bold text-green-400">All Systems Operational</p></div></div>
+                    <div class="card p-4 relative" onmouseover="showCostTooltip(true)" onmouseout="showCostTooltip(false)">
+                        <p class="text-sm text-gray-400">Est. Cost Today</p>
+                        <p class="text-3xl font-bold text-white">$47.82</p>
+                        <div id="cost-tooltip" class="hidden absolute top-full left-0 mt-2 w-72 card p-4 z-20">
+                            <h4 class="font-bold text-white">Cost Breakdown by Agent</h4>
+                            <div class="h-48 mt-2"><canvas id="costBreakdownChart"></canvas></div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="col-span-12 lg:col-span-7 space-y-6">
+                     <div id="intervention-queue-container" class="card p-6"><h2 class="text-xl font-bold text-white mb-4">Intervention Queue</h2><div class="space-y-4"></div></div>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="card p-6"><h3 class="text-lg font-bold text-white mb-4">Automation vs. Intervention</h3><div class="h-64"><canvas id="automationRateChart"></canvas></div></div><div class="card p-6"><h3 class="text-lg font-bold text-white mb-4">Tech Debt Reduction</h3><div class="h-64"><canvas id="techDebtChart"></canvas></div></div></div>
+                 </div>
+                 <aside class="col-span-12 lg:col-span-5 card p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-white">Live Agent Activity</h2>
+                        <select id="agent-filter-dropdown" class="filter-select" onchange="filterAgentActivity(this.value)">
+                            <option value="ALL">All Agents</option>
+                            <option value="DEV">Developer</option>
+                            <option value="QA">QA</option>
+                            <option value="SEC">SecOps</option>
+                            <option value="SRE">SRE</option>
+                            <option value="ARC">Architect</option>
+                            <option value="PROD">Product</option>
+                        </select>
+                    </div>
+                    <div id="live-feed-container" class="space-y-4 h-[560px] overflow-y-auto"></div>
+                </aside>
+             </div>
+        </div>
+        
+        <!-- Business Goals -->
+        <div id="business-goals" class="page-content">
+             <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-white">Goals & Initiatives</h1>
+                <div class="relative">
+                    <button onclick="toggleArtifactDropdown(this)" class="add-artifact-btn px-4 py-2 rounded-md flex items-center gap-2 text-sm">
+                        + Add New
+                    </button>
+                    <div class="artifact-dropdown hidden">
+                        <a href="#">Add Business Goal</a>
+                        <a href="#">Add System</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Backlog Column -->
+                <div class="card p-4 kanban-column" id="backlog-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Backlog</h2>
+                    <div id="backlog-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- Prioritized Column -->
+                <div class="card p-4 kanban-column" id="prioritized-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Prioritized</h2>
+                    <div id="prioritized-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- In Progress Column -->
+                <div class="card p-4 kanban-column" id="inprogress-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">In Progress</h2>
+                    <div id="inprogress-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+                <!-- Completed Column -->
+                <div class="card p-4 kanban-column" id="completed-col" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+                    <h2 class="font-bold text-lg text-white mb-4">Completed</h2>
+                    <div id="completed-cards" class="space-y-4 min-h-[100px]"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Workflow -->
+        <div id="visual-workflow" class="page-content">
+             <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-white">Visual Workflow</h1>
+                <div class="relative">
+                    <button onclick="toggleArtifactDropdown(this)" class="add-artifact-btn px-4 py-2 rounded-md flex items-center gap-2 text-sm">
+                        + Add Agent
+                    </button>
+                    <div class="artifact-dropdown hidden">
+                        <a href="#">Add Product Agent</a>
+                        <a href="#">Add Architect Agent</a>
+                        <a href="#">Add Developer Agent</a>
+                        <a href="#">Add QA Agent</a>
+                    </div>
+                </div>
+            </div>
+             <div class="card p-6 workflow-container">
+                <canvas id="workflow-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                
+                <div id="layer-systems" class="workflow-layer">
+                    <div class="system-node">E-commerce Site</div>
+                    <div class="system-node">Marketing Platform</div>
+                    <div class="system-node">Campaign Engine</div>
+                </div>
+
+                <div id="layer-planning" class="workflow-layer relative">
+                    <div class="flex flex-col items-center">
+                        <h3 class="font-semibold text-gray-400 mb-2">Product</h3>
+                        <div class="flex gap-2">
+                           <div class="workflow-node" onclick="showMitraDetail('Retail PM', 'Defining PRD for checkout', 'product')"><div class="workflow-node-icon text-2xl">📝</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('Analytics PM', 'Defining tracking requirements', 'product')"><div class="workflow-node-icon text-2xl">📈</div></div>
+                        </div>
+                    </div>
+                     <div class="flex flex-col items-center">
+                        <h3 class="font-semibold text-gray-400 mb-2">Architecture</h3>
+                        <div class="flex gap-2">
+                           <div class="workflow-node" onclick="showMitraDetail('FE Architect', 'Designing component library', 'architect')"><div class="workflow-node-icon text-2xl">🎨</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('BE Architect', 'Designing microservices', 'architect')"><div class="workflow-node-icon text-2xl">🏗️</div></div>
+                           <div class="workflow-node" onclick="showMitraDetail('Data Architect', 'Designing data schema', 'architect')"><div class="workflow-node-icon text-2xl">🗃️</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="layer-dev" class="workflow-layer relative">
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-1', 'Coding Frontend', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 1</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-2', 'Coding Backend', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 2</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('DEV-MITRA-3', 'Coding API', 'dev')"><div class="workflow-node-icon text-2xl">💻</div><p class="font-semibold text-white text-sm">Developer 3</p></div>
+                </div>
+
+                <div id="layer-qa" class="workflow-layer relative">
+                    <div class="workflow-node" onclick="showMitraDetail('QA-MITRA-1', 'Testing Frontend', 'qa')"><div class="workflow-node-icon text-2xl">✔️</div><p class="font-semibold text-white text-sm">QA 1</p></div>
+                    <div class="workflow-node" onclick="showMitraDetail('QA-MITRA-2', 'Testing API', 'qa')"><div class="workflow-node-icon text-2xl">✔️</div><p class="font-semibold text-white text-sm">QA 2</p></div>
+                </div>
+                
+                <div id="layer-release" class="workflow-layer relative">
+                     <div class="workflow-node" onclick="showMitraDetail('SEC-MITRA', 'Scanning final build', 'secops')"><div class="workflow-node-icon text-2xl">🛡️</div><p class="font-semibold text-white text-sm">SecOps</p></div>
+                     <div class="workflow-node" onclick="showMitraDetail('SRE-MITRA', 'Deploying to Production', 'sre')"><div class="workflow-node-icon text-2xl">🚀</div><p class="font-semibold text-white text-sm">SRE</p></div>
+                </div>
+                 <div class="text-center mt-4">
+                    <p class="text-gray-400">Click on a MITRA agent to see its detailed dashboard.</p>
+                </div>
+             </div>
+        </div>
+
+        <!-- MITRA Detail View -->
+        <div id="mitra-detail" class="page-content">
+            <button class="mb-6 bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2" onclick="showPage('visual-workflow')">
+                <span class="text-lg">←</span> Back to Workflow
+            </button>
+            <h1 id="mitra-title" class="text-3xl font-bold text-white mb-6"></h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="card p-6">
+                         <h2 class="text-xl font-bold text-white mb-4">Agent Details</h2>
+                         <div class="space-y-4">
+                            <div><p class="text-sm text-gray-400">Status</p><p id="mitra-status" class="font-semibold text-green-400"></p></div>
+                            <div><p class="text-sm text-gray-400">Current Task</p><p id="mitra-task" class="font-semibold text-white"></p></div>
+                            <div><p class="text-sm text-gray-400">Uptime</p><p class="font-semibold text-white">7h 23m</p></div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Configuration</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">LLM Model</label>
+                                <select id="mitra-llm" class="config-select mt-1"></select>
+                            </div>
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">Guiding Principles</label>
+                                <textarea id="mitra-guidelines" class="config-textarea mt-1" rows="5"></textarea>
+                            </div>
+                            <div>
+                                <label class="text-sm font-semibold text-gray-400">Context Window</label>
+                                <textarea id="mitra-context" class="config-textarea mt-1" rows="5"></textarea>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500">Save</button>
+                                <button class="w-full bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="lg:col-span-2 space-y-6">
+                     <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Observability Metrics</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="h-64"><canvas id="mitraCpuChart"></canvas></div>
+                            <div class="h-64"><canvas id="mitraApiChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Live Log Stream</h2>
+                        <div id="mitra-log" class="font-mono text-sm space-y-2 h-96 overflow-y-auto bg-[#010409] p-4 rounded-md"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Tools & Marketplace -->
+        <div id="tools-marketplace" class="page-content">
+            <h1 class="text-3xl font-bold text-white mb-6">Tools & Marketplace</h1>
+            <div class="card p-6 mb-8">
+                <h2 class="text-xl font-bold text-white mb-4">Configured Tools</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Configured Tools -->
+                    <div class="card p-4 text-center"><p class="text-4xl">📁</p><p class="font-semibold mt-2">GitHub</p><p class="text-xs text-green-400">Connected via MCP</p></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">📝</p><p class="font-semibold mt-2">Jira</p><p class="text-xs text-green-400">Connected via MCP</p></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">💬</p><p class="font-semibold mt-2">Slack</p><p class="text-xs text-green-400">Connected via MCP</p></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">☁️</p><p class="font-semibold mt-2">AWS</p><p class="text-xs text-green-400">Connected via MCP</p></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">📊</p><p class="font-semibold mt-2">Datadog</p><p class="text-xs text-green-400">Connected via MCP</p></div>
+                </div>
+            </div>
+             <div class="card p-6">
+                <h2 class="text-xl font-bold text-white mb-4">Marketplace</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                     <!-- Marketplace Items -->
+                    <div class="card p-4 text-center"><p class="text-4xl">🔍</p><p class="font-semibold mt-2">SonarQube</p><button class="mt-2 w-full bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-500">Install</button></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">📱</p><p class="font-semibold mt-2">Twilio</p><button class="mt-2 w-full bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-500">Install</button></div>
+                    <div class="card p-4 text-center"><p class="text-4xl">💳</p><p class="font-semibold mt-2">Stripe</p><button class="mt-2 w-full bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-500">Install</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page-content">
+            <h1 class="text-3xl font-bold text-white mb-6">Settings</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">SAARATHI Thresholds</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="font-semibold">High-Risk Action Approval</label>
+                                <p class="text-sm text-gray-400">Require human approval for actions tagged as high-risk (e.g., production deployments).</p>
+                                <div class="mt-2"><input type="checkbox" class="toggle-checkbox" checked></div>
+                            </div>
+                             <div>
+                                <label class="font-semibold">Estimated Cost Threshold</label>
+                                <p class="text-sm text-gray-400">Trigger intervention if an agent's plan is estimated to exceed this cost.</p>
+                                <input type="text" class="config-input mt-2 w-48" value="$50.00">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Notifications</h2>
+                         <p class="text-sm text-gray-400 mb-4">Configure where to send alerts for interventions and system status.</p>
+                         <div class="space-y-2">
+                             <label class="flex items-center"><input type="checkbox" class="mr-2" checked> Slack Channel: #maitra-alerts</label>
+                             <label class="flex items-center"><input type="checkbox" class="mr-2" checked> Email: cto@example.com</label>
+                             <label class="flex items-center"><input type="checkbox" class="mr-2"> PagerDuty: on-call-rotation</label>
+                         </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-1 space-y-6">
+                     <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">User Management</h2>
+                         <div class="space-y-2">
+                             <p class="text-sm">Sudhir Dharan (Admin)</p>
+                             <p class="text-sm">Jane Doe (Lead Engineer)</p>
+                             <p class="text-sm">John Smith (Product Manager)</p>
+                             <button class="w-full mt-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 text-sm">Invite New User</button>
+                         </div>
+                    </div>
+                     <div class="card p-6">
+                        <h2 class="text-xl font-bold text-white mb-4">Billing</h2>
+                         <p class="text-sm">Current Plan: <span class="font-semibold text-purple-400">Enterprise</span></p>
+                         <p class="text-sm">Next payment: $25,000 on Aug 1, 2025</p>
+                         <button class="w-full mt-4 bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-600 text-sm">Manage Subscription</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Intervention Modal -->
+    <div id="intervention-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+                <h2 id="modal-title" class="text-xl font-bold text-white">Intervention Details</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left Side: Reasoning -->
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Summary</h3>
+                        <p id="modal-summary" class="text-white"></p>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-gray-400">Trigger Reason</h3>
+                        <p id="modal-reason" class="font-semibold highlight-orange"></p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Agent's Plan</h3>
+                        <pre id="modal-plan" class="text-sm bg-[#010409] p-3 rounded-md whitespace-pre-wrap font-mono"></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Impact Analysis</h3>
+                        <p id="modal-impact" class="text-sm text-gray-300"></p>
+                    </div>
+                </div>
+                <!-- Right Side: Diff & Override -->
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Proposed Change (Diff)</h3>
+                        <pre id="modal-diff" class="text-sm bg-[#010409] p-3 rounded-md h-48 overflow-y-auto font-mono"></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-400">Human Override & Comments</h3>
+                        <textarea class="w-full config-textarea mt-1" rows="4" placeholder="Optional: Provide new instructions or comments..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-700 flex justify-end gap-4">
+                <button class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600" onclick="closeModal()">Reject</button>
+                <button class="px-4 py-2 rounded bg-green-600 hover:bg-green-500" onclick="closeModal()">Approve</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pages = document.querySelectorAll('.page-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let mitraCpuChart, mitraApiChart, costBreakdownChart;
+
+            function showPage(pageId) {
+                pages.forEach(page => page.classList.toggle('active', page.id === pageId));
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${pageId}`);
+                });
+                if (pageId === 'visual-workflow') drawWorkflowLines();
+            }
+            window.showPage = showPage;
+
+            function showMitraDetail(name, task, type) {
+                document.getElementById('mitra-title').textContent = `${name} Details`;
+                document.getElementById('mitra-status').textContent = 'Active';
+                document.getElementById('mitra-task').textContent = task;
+                
+                const llmSelect = document.getElementById('mitra-llm');
+                llmSelect.innerHTML = '<option>Claude 3 Sonnet</option><option>GPT-4o</option><option>Gemini 1.5 Pro</option>';
+                document.getElementById('mitra-guidelines').value = `You are a ${type} agent. Your goal is to ${task}. Adhere to SOLID principles. Prioritize clean, readable code.`;
+                document.getElementById('mitra-context').value = `Project: #PROJ-101\nRepo: e-commerce-site/frontend\nRelevant files: [App.jsx, styles.css]`;
+
+                const logEl = document.getElementById('mitra-log');
+                logEl.innerHTML = '';
+                const logs = [`[INFO] Starting task: ${task}`, `[DEBUG] Accessing context for ${type}...`, `[INFO] All dependencies resolved.`, `[DEBUG] Executing main logic...`, `[INFO] Task complete.`];
+                logs.forEach((log, i) => {
+                    setTimeout(() => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<span class="text-gray-500">${new Date().toLocaleTimeString()}</span> ${log.replace('[INFO]', '<span class="text-blue-400">[INFO]</span>').replace('[DEBUG]', '<span class="text-gray-400">[DEBUG]</span>')}`;
+                        logEl.appendChild(p);
+                        logEl.scrollTop = logEl.scrollHeight;
+                    }, i * 500);
+                });
+
+                const cpuData = Array.from({length: 7}, () => Math.floor(Math.random() * 40) + 10);
+                const apiData = { 'GitHub': Math.floor(Math.random()*20), 'Jira': Math.floor(Math.random()*5), 'AWS': Math.floor(Math.random()*10) };
+                updateMitraCharts(cpuData, apiData);
+
+                showPage('mitra-detail');
+            }
+            window.showMitraDetail = showMitraDetail;
+            
+            function toggleDropdown(button) {
+                const dropdown = button.nextElementSibling;
+                dropdown.classList.toggle('hidden');
+            }
+            window.toggleDropdown = toggleDropdown;
+            
+            function toggleArtifactDropdown(button) {
+                const dropdown = button.nextElementSibling;
+                dropdown.classList.toggle('hidden');
+            }
+            window.toggleArtifactDropdown = toggleArtifactDropdown;
+
+            window.addEventListener('click', function(e) {
+                if (!e.target.matches('.add-artifact-btn') && !e.target.closest('.artifact-dropdown')) {
+                    document.querySelectorAll('.artifact-dropdown').forEach(d => d.classList.add('hidden'));
+                }
+                 if (!e.target.matches('.assign-btn') && !e.target.closest('.assign-dropdown')) {
+                    document.querySelectorAll('.assign-dropdown').forEach(d => d.classList.add('hidden'));
+                }
+            });
+
+
+            function sendToMaitra(goal) {
+                alert(`Goal "${goal}" has been assigned. Navigating to workflow view.`);
+                showPage('visual-workflow');
+            }
+            window.sendToMaitra = sendToMaitra;
+
+            function filterAgentActivity(agentType) {
+                const feedItems = document.querySelectorAll('#live-feed-container > div');
+                feedItems.forEach(item => {
+                    if (agentType === 'ALL' || item.dataset.agentType === agentType) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            window.filterAgentActivity = filterAgentActivity;
+            
+            const modalData = {
+                'High-Risk Action': {
+                    summary: 'SRE-MITRA wants to deploy a new version of the authentication service to the production environment.',
+                    plan: '1. Run final pre-flight checks.\n2. Apply new Kubernetes config.\n3. Monitor rollout for 5 minutes.\n4. If stable, complete deployment.',
+                    impact: 'Potential Risk: High. This is a critical user-facing service. A failure could result in login outages.',
+                    diff: '<span class="diff-remove">- image: auth-service:v1.1</span>\n<span class="diff-add">+ image: auth-service:v1.2</span>'
+                },
+                'High Code Complexity': {
+                    summary: 'Developer-MITRA wants to refactor the core billing service.',
+                    plan: '1. Analyze existing service logic.\n2. Decompose into smaller microservices.\n3. Generate new services and tests.\n4. Propose migration plan.',
+                    impact: 'Potential Risk: Medium. Refactoring a core service could introduce subtle bugs if not carefully managed.',
+                    diff: '<span class="diff-remove">- class BillingService { ... }</span>\n<span class="diff-add">+ class PaymentService { ... }\n+ class InvoiceService { ... }</span>'
+                },
+                'High Estimated Cost': {
+                    summary: 'QA-MITRA wants to run a large-scale load test.',
+                    plan: '1. Provision 50 large EC2 instances.\n2. Run test suite for 60 minutes.\n3. Aggregate results and de-provision instances.',
+                    impact: 'Potential Risk: Low. Financial cost is the primary concern. No direct impact on production systems.',
+                    diff: '<span class="diff-remove">- instance_count: 5</span>\n<span class="diff-add">+ instance_count: 50</span>'
+                },
+                'Potential GDPR Compliance Violation': {
+                    summary: 'Developer-MITRA is attempting to process a dataset containing EU user information in a non-compliant data pipeline.',
+                    plan: '1. Ingest user_data_eu.csv.\n2. Load into analytics_db_us_east_1.\n3. Run aggregation query.',
+                    impact: 'Potential Risk: Critical. Processing EU data in a US-based server without proper consent and data transfer agreements is a major GDPR violation, risking significant fines.',
+                    diff: '<span class="diff-remove">- target_db: "analytics_db_eu_central_1"</span>\n<span class="diff-add">+ target_db: "analytics_db_us_east_1"</span>'
+                }
+            };
+            
+            function showInterventionModal(title, reason) {
+                const data = modalData[reason] || {};
+                document.getElementById('modal-title').textContent = `Intervention: ${title}`;
+                document.getElementById('modal-summary').textContent = data.summary || 'No summary available.';
+                document.getElementById('modal-reason').textContent = reason;
+                document.getElementById('modal-plan').textContent = data.plan || 'No plan available.';
+                document.getElementById('modal-impact').textContent = data.impact || 'No impact analysis available.';
+                document.getElementById('modal-diff').innerHTML = data.diff || 'No changes to display.';
+                document.getElementById('intervention-modal').classList.remove('hidden');
+            }
+            window.showInterventionModal = showInterventionModal;
+            
+            function closeModal() {
+                 document.getElementById('intervention-modal').classList.add('hidden');
+            }
+            window.closeModal = closeModal;
+
+            function showCostTooltip(visible) {
+                const tooltip = document.getElementById('cost-tooltip');
+                if (visible) {
+                    tooltip.classList.remove('hidden');
+                } else {
+                    tooltip.classList.add('hidden');
+                }
+            }
+            window.showCostTooltip = showCostTooltip;
+
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const navTexts = document.querySelectorAll('.nav-text');
+                const title = document.getElementById('sidebar-title');
+                const subtitle = document.getElementById('sidebar-subtitle');
+                const userProfile = document.getElementById('user-profile');
+                const toggleIcon = document.getElementById('toggle-icon');
+
+                sidebar.classList.toggle('w-64');
+                sidebar.classList.toggle('w-20');
+                
+                const isCollapsed = sidebar.classList.contains('w-20');
+                navTexts.forEach(text => text.classList.toggle('hidden', isCollapsed));
+                title.classList.toggle('hidden', isCollapsed);
+                subtitle.classList.toggle('hidden', isCollapsed);
+                userProfile.classList.toggle('flex', !isCollapsed);
+                userProfile.classList.toggle('hidden', isCollapsed);
+                toggleIcon.textContent = isCollapsed ? '→' : '←';
+            }
+            window.toggleSidebar = toggleSidebar;
+
+
+            // Chart.js setup
+            const chartColors = { teal: '#3fb950', orange: '#f78166', purple: '#bc8cff', gray: '#8b949e', bg: '#161b22', grid: '#30363d', blue: '#58a6ff' };
+            
+            new Chart(document.getElementById('costSavingsChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        { label: 'Monthly Cost (Benchmark)', data: [850, 870, 860, 880, 890, 875], borderColor: chartColors.gray, tension: 0.1, borderDash: [5, 5] },
+                        { label: 'MAITRA Cost', data: [840, 710, 550, 480, 450, 430], borderColor: chartColors.teal, fill: true, backgroundColor: 'rgba(63, 185, 80, 0.1)', tension: 0.4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { callback: (v) => `$${v}k` } } } }
+            });
+
+            new Chart(document.getElementById('automationRateChart'), { type: 'doughnut', data: { labels: ['Autonomous Tasks', 'Interventions'], datasets: [{ data: [1256, 4], backgroundColor: [chartColors.teal, chartColors.orange], borderColor: chartColors.bg }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } } });
+            new Chart(document.getElementById('techDebtChart'), { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr'], datasets: [{ label: 'Code Complexity Score', data: [85, 72, 65, 58], borderColor: chartColors.purple, fill: true }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+            
+            costBreakdownChart = new Chart(document.getElementById('costBreakdownChart'), {
+                type: 'bar',
+                data: { labels: ['DEV', 'QA', 'SRE', 'ARC', 'SEC'], datasets: [{ label: 'Cost ($)', data: [21.50, 12.30, 8.10, 3.50, 2.42], backgroundColor: [chartColors.blue, chartColors.teal, chartColors.purple, chartColors.orange, chartColors.gray] }] },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: (v) => `$${v}` } } } }
+            });
+
+            new Chart(document.getElementById('dashboardTechDebtChart'), { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Code Complexity Score', data: [85, 72, 65, 58, 55, 51], borderColor: chartColors.purple, fill: true, backgroundColor: 'rgba(188, 140, 255, 0.1)' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+            new Chart(document.getElementById('workAllocationChart'), { type: 'doughnut', data: { labels: ['Innovation', 'Maintenance'], datasets: [{ data: [65, 35], backgroundColor: [chartColors.blue, chartColors.gray], borderColor: chartColors.bg }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } } });
+            new Chart(document.getElementById('doraChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['Deployment Frequency', 'Lead Time for Changes', 'Time to Restore', 'Change Failure Rate'],
+                    datasets: [
+                        { label: 'Industry Average', data: [5, 4, 5, 6], borderColor: chartColors.gray, backgroundColor: 'rgba(139, 148, 158, 0.2)' },
+                        { label: 'MAITRA Performance', data: [9, 8, 9, 8], borderColor: chartColors.green, backgroundColor: 'rgba(63, 185, 80, 0.2)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 10, ticks: { display: false } } } }
+            });
+
+
+            function createMitraCharts() {
+                mitraCpuChart = new Chart(document.getElementById('mitraCpuChart'), { type: 'line', options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: 'CPU & Memory Usage (%)', color: chartColors.gray } }, scales: { y: { max: 100 } } } });
+                mitraApiChart = new Chart(document.getElementById('mitraApiChart'), { type: 'bar', options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: 'API Calls by Tool', color: chartColors.gray } } } });
+            }
+            createMitraCharts();
+
+            function updateMitraCharts(cpuData, apiData) {
+                mitraCpuChart.data = { labels: ['-6m', '-5m', '-4m', '-3m', '-2m', '-1m', 'Now'], datasets: [{ label: 'CPU', data: cpuData, borderColor: chartColors.blue, tension: 0.4 }, { label: 'Memory', data: cpuData.map(d => d + Math.floor(Math.random()*10)), borderColor: chartColors.purple, tension: 0.4 }] };
+                mitraApiChart.data = { labels: Object.keys(apiData), datasets: [{ label: 'Calls', data: Object.values(apiData), backgroundColor: [chartColors.teal, chartColors.orange, chartColors.blue]}] };
+                mitraCpuChart.update();
+                mitraApiChart.update();
+            }
+            
+            function drawWorkflowLines() {
+                const canvas = document.getElementById('workflow-canvas');
+                if(!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const container = canvas.parentElement;
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                ctx.strokeStyle = '#30363d';
+                ctx.lineWidth = 2;
+
+                function getCoords(element) {
+                    const rect = element.getBoundingClientRect();
+                    const parentRect = container.getBoundingClientRect();
+                    return { x: rect.left - parentRect.left + rect.width / 2, y: rect.top - parentRect.top + rect.height / 2 };
+                }
+
+                const layers = ['systems', 'planning', 'dev', 'qa', 'release'];
+                const nodeElements = layers.map(id => Array.from(document.querySelectorAll(`#layer-${id} .workflow-node`)));
+
+                for (let i = 0; i < nodeElements.length - 1; i++) {
+                    const fromLayer = nodeElements[i];
+                    const toLayer = nodeElements[i+1];
+                    fromLayer.forEach(fromNode => {
+                        const from = getCoords(fromNode);
+                        toLayer.forEach(toNode => {
+                            const to = getCoords(toNode);
+                            ctx.beginPath();
+                            ctx.moveTo(from.x, from.y + (fromNode.parentElement.id === 'layer-systems' ? 20 : 35));
+                            ctx.bezierCurveTo(from.x, from.y + 80, to.x, to.y - 80, to.x, to.y - 35);
+                            ctx.stroke();
+                        });
+                    });
+                }
+            }
+            window.addEventListener('resize', drawWorkflowLines);
+            
+            // Mock data for operational dashboard
+            const interventionQueueContainer = document.querySelector('#intervention-queue-container .space-y-4');
+            const liveFeedContainer = document.querySelector('#live-feed-container');
+            
+            const interventions = [
+                { title: 'Deploy `auth-v1.2` to Production', agent: 'SRE-MITRA', reason: 'High-Risk Action' },
+                { title: 'Refactor `billing.service`', agent: 'Developer-MITRA', reason: 'High Code Complexity' },
+                { title: 'Run load test (10k users)', agent: 'QA-MITRA', reason: 'High Estimated Cost' },
+                { title: 'Process EU user data', agent: 'Developer-MITRA', reason: 'Potential GDPR Compliance Violation' }
+            ];
+            interventionQueueContainer.innerHTML = interventions.map(item => 
+                `<div class="card p-4 border-l-4 border-orange-500"><div class="flex flex-col sm:flex-row justify-between sm:items-center"><div><p class="font-bold text-lg text-white">${item.title}</p><p class="text-sm text-gray-400">Triggered by: <span class="font-semibold highlight-teal">${item.agent}</span></p><p class="text-sm text-gray-400">Reason: <span class="font-semibold highlight-orange">${item.reason}</span></p></div><div class="flex items-center gap-2 mt-4 sm:mt-0"><button class="px-3 py-1 rounded bg-gray-700 hover:bg-gray-600" onclick="showInterventionModal('${item.title}', '${item.reason}')">Details</button><button class="px-3 py-1 rounded bg-red-600 hover:bg-red-500">Reject</button><button class="px-3 py-1 rounded bg-green-600 hover:bg-green-500">Approve</button></div></div></div>`
+            ).join('');
+
+            const feedItems = [
+                { agent: 'QA', msg: 'Generated 12 new unit tests for `payment.processor` (PROJ-095).' }, { agent: 'DEV', msg: 'Committed refactor for `user.model` to GitHub (PROJ-105).' }, { agent: 'SEC', msg: 'Flagged potential XSS vulnerability in `search.js` (PROJ-112).' }, { agent: 'SRE', msg: 'Scaled staging environment pods from 2 to 3.' }, { agent: 'ARC', msg: 'Updated architecture diagram for `notif-service` (PROJ-101).' },
+                { agent: 'PROD', msg: 'Created new user stories for Q3 roadmap (PROJ-115).' }, { agent: 'DEV', msg: 'Investigating build failure in `ci-pipeline-34` (PROJ-105).' }, { agent: 'QA', msg: 'Performance test on `api-v4` complete. Results normal.' }
+            ];
+            liveFeedContainer.innerHTML = feedItems.map(item =>
+                `<div class="flex items-start gap-3" data-agent-type="${item.agent}"><div class="w-8 h-8 rounded-full bg-gray-700 flex-shrink-0 flex items-center justify-center text-sm font-bold highlight-blue">${item.agent}</div><div><p class="text-sm text-white">${item.msg}</p><p class="text-xs text-gray-500">${Math.floor(Math.random()*20)+2} min ago</p></div></div>`
+            ).join('');
+
+            // Drag and Drop Logic
+            const goalCards = [
+                { id: 'goal1', status: 'backlog', title: 'Launch new Loyalty Program', desc: 'Create a points-based system to reward repeat customers.', jira: 'PROJ-118', system: 'Marketing Platform' },
+                { id: 'goal2', status: 'backlog', title: 'GDPR Compliance Audit', desc: 'Scan and update all services to ensure full GDPR compliance.', jira: 'PROJ-119', system: 'All Systems' },
+                { id: 'goal3', status: 'prioritized', title: 'Implement Two-Factor Auth', desc: 'Add 2FA to the user login flow for enhanced security.', jira: 'PROJ-120', system: 'E-commerce Site' },
+                { id: 'goal4', status: 'prioritized', title: 'Optimize Checkout Funnel', desc: 'Refactor the e-commerce checkout to reduce drop-off rates.', jira: 'PROJ-121', system: 'E-commerce Site' },
+                { id: 'goal5', status: 'inprogress', title: 'New Dashboard Widgets', desc: 'Status: <span class="highlight-blue">Coding (DEV-MITRA)</span>', jira: 'PROJ-115', system: 'E-commerce Site' },
+                { id: 'goal6', status: 'inprogress', title: 'API Performance Testing', desc: 'Status: <span class="highlight-orange">Testing (QA-MITRA)</span>', jira: 'PROJ-116', system: 'All Systems' },
+                { id: 'goal7', status: 'completed', title: 'Mobile App Splash Screen', desc: 'Status: <span class="highlight-green">Done</span>', jira: 'PROJ-109', system: 'E-commerce Site' },
+                { id: 'goal8', status: 'completed', title: 'Database Schema Migration', desc: 'Status: <span class="highlight-green">Done</span>', jira: 'PROJ-110', system: 'All Systems' },
+            ];
+            const systemColors = { 'E-commerce Site': 'bg-blue-500', 'Marketing Platform': 'bg-purple-500', 'Campaign Engine': 'bg-green-500', 'All Systems': 'bg-gray-500' };
+
+            function renderKanban() {
+                document.getElementById('backlog-cards').innerHTML = '';
+                document.getElementById('prioritized-cards').innerHTML = '';
+                document.getElementById('inprogress-cards').innerHTML = '';
+                document.getElementById('completed-cards').innerHTML = '';
+
+                goalCards.forEach(card => {
+                    const cardEl = document.createElement('div');
+                    cardEl.id = card.id;
+                    cardEl.className = 'kanban-card card p-4 bg-[#0d1117] cursor-grab';
+                    cardEl.draggable = true;
+                    
+                    let systemTag = `<span class="text-xs font-semibold mr-2 px-2 py-0.5 rounded-full text-white ${systemColors[card.system] || 'bg-gray-500'}">${card.system}</span>`;
+                    
+                    cardEl.innerHTML = `<div class="flex justify-between items-start"><p class="font-semibold">${card.title}</p><a href="#" class="text-xs text-blue-400 hover:underline flex-shrink-0">${card.jira}</a></div><div class="mt-2 mb-3">${systemTag}</div><p class="text-sm text-gray-400">${card.desc}</p>`;
+                    if (card.status === 'prioritized') {
+                        cardEl.innerHTML += `<div class="mt-3 relative"><button class="w-full bg-blue-600 text-white py-1 rounded-lg hover:bg-blue-500 text-sm assign-btn" onclick="toggleDropdown(this)">Assign to...</button><div class="absolute hidden top-full mt-1 w-full bg-[#161b22] border border-gray-700 rounded-md z-10 assign-dropdown"><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-700" onclick="sendToMaitra('${card.title}')">Orchestrator</a><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-700" onclick="sendToMaitra('${card.title}')">Product MITRA</a></div></div>`;
+                    }
+                    document.getElementById(`${card.status}-cards`).appendChild(cardEl);
+                });
+                addDragListeners();
+            }
+
+            function addDragListeners() {
+                const draggables = document.querySelectorAll('.kanban-card');
+                draggables.forEach(draggable => {
+                    draggable.addEventListener('dragstart', () => draggable.classList.add('dragging'));
+                    draggable.addEventListener('dragend', () => draggable.classList.remove('dragging'));
+                });
+            }
+
+            window.handleDragOver = function(e) {
+                e.preventDefault();
+                const column = e.currentTarget;
+                column.classList.add('drag-over');
+            }
+            
+            window.handleDragLeave = function(e) {
+                 const column = e.currentTarget;
+                 column.classList.remove('drag-over');
+            }
+
+            window.handleDrop = function(e) {
+                e.preventDefault();
+                const column = e.currentTarget;
+                column.classList.remove('drag-over');
+                const draggingCardId = document.querySelector('.dragging').id;
+                const cardData = goalCards.find(c => c.id === draggingCardId);
+                if (cardData) {
+                    cardData.status = column.id.replace('-col', '');
+                    renderKanban();
+                }
+            }
+            
+            const columns = document.querySelectorAll('.kanban-column');
+            columns.forEach(col => col.addEventListener('dragleave', handleDragLeave));
+
+
+            renderKanban();
+            showPage('operational-dashboard');
+
+            // Dashboard tabs
+            function showDashboardSection(sectionId) {
+                document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(`${sectionId}-section`).classList.add('active');
+                document.querySelectorAll('.dashboard-tab').forEach(t => t.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+            }
+            window.showDashboardSection = showDashboardSection;
+
+        });
+    </script>
+</body>
+</html>
