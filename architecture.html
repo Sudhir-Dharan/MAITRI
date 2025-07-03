@@ -13,25 +13,28 @@
             color: #c9d1d9;
         }
         .arch-card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
+            background-color: #1a2b3c;
+            border: 1px solid #8b949e;
             border-radius: 0.5rem;
             padding: 0.3rem; /* Further reduced padding */
             text-align: center;
             z-index: 10;
             transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
         }
         .arch-card:hover {
             border-color: #58a6ff;
-            box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.4), 0 12px 40px rgba(88, 166, 255, 0.3);
+            transform: translateY(-3px);
         }
         .arch-layer {
-            border: 2px dashed #30363d;
+            border: 2px dashed #8b949e;
             border-radius: 0.75rem;
             padding: 0.6rem; /* Reduced padding */
             padding-top: 1rem; /* Reduced padding-top */
             position: relative;
             margin-top: 0.6rem; /* Reduced margin-top */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
         }
         .layer-label {
             position: absolute;
@@ -45,7 +48,7 @@
             font-size: 0.5rem; /* Further reduced font size */
         }
         .tech-label {
-            font-size: 0.5rem; /* Further reduced font size */
+            font-size: 0.6rem; /* Increased font size */
             color: #8b949e;
             font-family: monospace;
         }
@@ -75,7 +78,7 @@
                             <div id="node-webapp" class="arch-card"><p class="font-semibold text-white">Web App</p><p class="tech-label">React, Next.js (SSR/SSG), GraphQL Client (Apollo/Relay), Tailwind CSS</p></div>
                             <div id="node-vscode" class="arch-card"><p class="font-semibold text-white">IDE Extensions</p><p class="tech-label">TypeScript, VS Code Extension API, Language Server Protocol (LSP)</p></div>
                             <div id="node-cli" class="arch-card"><p class="font-semibold text-white">CLI</p><p class="tech-label">Go, Cobra, Docker CLI Integration</p></div>
-                            <div id="node-api-presentation" class="arch-card"><p class="font-semibold text-white">Public API</p><p class="tech-label">REST, OpenAPI, Webhooks</p></div>
+                            <div id="node-api-presentation" class="arch-card"><p class="font-semibold text-white">API</p><p class="tech-label">REST, OpenAPI, Webhooks</p></div>
                         </div>
                     </div>
                     <!-- Developer Framework & Marketplace -->
@@ -96,7 +99,7 @@
 
                 <!-- Application Layer -->
                 <div class="arch-layer">
-                    <p class="layer-label highlight-blue">Application Layer</p>
+                    <p class="layer-label highlight-blue">Application Layer ☁️</p>
                     <div class="flex flex-col items-center space-y-4">
                         <div id="node-api" class="arch-card w-1/2"><p class="font-semibold text-white">API Gateway</p><p class="tech-label">GraphQL (Apollo Federation), Node.js/FastAPI, NGINX/Envoy</p></div>
                         <div class="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -131,28 +134,21 @@
                                     <div id="node-iam" class="arch-card text-sm"><p>Identity & Access</p><p class="tech-label">OpenID Connect, SAML</p></div>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- MITRA Agent Framework -->
-                            <div id="mitra-framework" class="arch-layer mitra-container">
+                            <div id="mitra-framework" class="arch-layer">
                                 <p class="layer-label highlight-purple">MITRA Framework</p>
-                                <div class="grid grid-cols-3 md:grid-cols-7 gap-2">
-                                    <div id="node-mitra-prod" class="arch-card text-xs"><p class="text-2xl">📝</p><p>Product</p></div>
-                                    <div id="node-mitra-arch" class="arch-card text-xs"><p class="text-2xl">🏗️</p><p>Architect</p></div>
-                                    <div id="node-mitra-dev" class="arch-card text-xs"><p class="text-2xl">💻</p><p>Developer</p></div>
-                                    <div id="node-mitra-qa" class="arch-card text-xs"><p class="text-2xl">✔️</p><p>QA</p></div>
-                                    <div id="node-mitra-sec" class="arch-card text-xs"><p class="text-2xl">🛡️</p><p>SecOps</p></div>
-                                    <div id="node-mitra-sre" class="arch-card text-xs"><p class="text-2xl">🚀</p><p>SRE</p></div>
-                                    <div id="node-mitra-ux" class="arch-card text-xs"><p class="text-2xl">🎨</p><p>UX</p></div>
-                                </div>
-                                <p class="tech-label mt-4 text-center">LLM Integration: OpenAI, Anthropic, Hugging Face (via API/SDK)</p>
+                                <div class="grid grid-cols-3 md:grid-cols-7 gap-1"><div class="arch-card text-xs"><p class="text-2xl">📝</p><p>Product</p></div><div class="arch-card text-xs"><p class="text-2xl">🎨</p><p>UX</p></div><div class="arch-card text-xs"><p class="text-2xl">🏗️</p><p>Architect</p></div><div class="arch-card text-xs"><p class="text-2xl">💻</p><p>Developer</p></div><div class="arch-card text-xs"><p class="text-2xl">✔️</p><p>QA</p></div><div class="arch-card text-xs"><p class="text-2xl">🛡️</p><p>SecOps</p></div><div class="arch-card text-xs"><p class="text-2xl">🚀</p><p>SRE</p></div></div>
+                                <p class="tech-label mt-4 text-center">LLM Integration: OpenAI, Anthropic, Hugging Face (via API/SDK), Custom LLM</p>
                             </div>
                             <!-- Internal Service Connectors -->
                             <div id="internal-connectors" class="arch-layer">
                                 <p class="layer-label">Internal Service Connectors</p>
                                 <div class="arch-card h-full flex flex-col justify-center">
-                                    <p class="font-bold text-base">Internal MITRA</p>
-                                    <p class="tech-label">Provides a lightweight, internal version of the MITRA framework for service-to-service communication and automation.</p>
+                                    <p class="font-bold text-base">Integration Agent</p>
+                                    <p class="tech-label">Facilitates service-to-service communication and automation via an agent.</p>
                                 </div>
                             </div>
                         </div>
@@ -189,20 +185,20 @@
                         </div>
                     </div>
                     <!-- Right side: Cloud Infra -->
-                    <div class="arch-layer">
-                        <p class="layer-label">Cloud Infrastructure</p>
+                    <!-- Right side: Cloud Infra -->
+                    <div class="arch-layer" style="background-color: #161b22;"><p class="layer-label">Cloud Infrastructure</p>
                         <div class="grid grid-cols-3 gap-2">
                              <div id="infra-aws" class="arch-card border border-yellow-500/50">
                                 <p class="font-bold text-white">AWS</p>
-                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">EKS Cluster, S3, Lambda, RDS (Managed DB)</div>
+                                 <p class="tech-label">EKS Cluster, S3, Lambda, RDS (Managed DB)</p>
                             </div>
                              <div id="infra-azure" class="arch-card border border-blue-500/50">
                                 <p class="font-bold text-white">Azure</p>
-                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">AKS Cluster, Azure Blob Storage, Azure Functions (Serverless)</div>
+                                 <p class="tech-label">AKS Cluster, Azure Blob Storage, Azure Functions (Serverless)</p>
                             </div>
                              <div id="infra-gcp" class="arch-card border border-green-500/50">
-                                <p class="font-bold text-white">GCP</p>
-                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">GKE Cluster, Cloud Storage, Cloud Functions (Serverless)</div>
+                                <p class="font-semibold text-white">GCP</p>
+                                 <p class="tech-label">GKE Cluster, Cloud Storage, Cloud Functions (Serverless)</p>
                             </div>
                         </div>
                     </div>
@@ -277,6 +273,7 @@
             const plugins = getCoords('node-plugins');
             const marketplace = getCoords('node-marketplace');
             const threatDetection = getCoords('node-threat-detection');
+            const customLLM = getCoords('node-custom-llm');
 
             // Presentation -> API
             drawLine(webapp.bottom, api.top, '#58a6ff', false, true);
@@ -291,14 +288,14 @@
             // API -> Orchestrator
             drawLine(api.bottom, orchestrator.top);
 
-            // API -> Security
-            drawLine(api.bottom, threatDetection.top, '#f85149', true);
-
             // Orchestrator -> MITRA Framework
             drawLine(orchestrator.bottom, mitraFramework.top);
 
             // Orchestrator -> Internal Service Connectors
             drawLine(orchestrator.bottom, internalConnectors.top);
+
+            // Orchestrator -> Custom LLM (Optional - Dashed line)
+            drawLine(orchestrator.bottom, customLLM.top, '#bc8cff', true);
             
             // MITRA Framework -> Integration Layer
             drawLine(mitraFramework.bottom, mcp.top, '#8b949e');
