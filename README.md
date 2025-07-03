@@ -1,4 +1,4 @@
-# MAITRA - Autonomous Software Development Platform
+# MAITRI - Autonomous Software Development Platform
 
 This project is a web-based dashboard for managing and visualizing an autonomous software development lifecycle.
 
