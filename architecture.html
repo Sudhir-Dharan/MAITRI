@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAITRI - Detailed Technical Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .arch-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 0.3rem; /* Further reduced padding */
+            text-align: center;
+            z-index: 10;
+            transition: all 0.2s ease-in-out;
+        }
+        .arch-card:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+        }
+        .arch-layer {
+            border: 2px dashed #30363d;
+            border-radius: 0.75rem;
+            padding: 0.6rem; /* Reduced padding */
+            padding-top: 1rem; /* Reduced padding-top */
+            position: relative;
+            margin-top: 0.6rem; /* Reduced margin-top */
+        }
+        .layer-label {
+            position: absolute;
+            top: -0.4rem; /* Adjusted position */
+            left: 0.4rem; /* Adjusted position */
+            background-color: #0d1117;
+            padding: 0 0.25rem;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            font-size: 0.5rem; /* Further reduced font size */
+        }
+        .tech-label {
+            font-size: 0.5rem; /* Further reduced font size */
+            color: #8b949e;
+            font-family: monospace;
+        }
+        .highlight-blue { color: #58a6ff; }
+        .highlight-green { color: #3fb950; }
+        .highlight-orange { color: #f78166; }
+        .highlight-purple { color: #bc8cff; }
+        .highlight-red { color: #f85149; }
+        .mitra-container {
+            background-color: rgba(88, 166, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="p-2 md:p-4">
+    <div class="w-full mx-auto">
+        <h1 class="text-2xl font-bold text-center text-white mb-6">MAITRI - Detailed Technical Architecture</h1>
+        <div class="relative">
+            <canvas id="connector-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+            
+            <div class="space-y-4 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Presentation Layer -->
+                    <div class="arch-layer">
+                        <p class="layer-label">Presentation Layer</p>
+                        <div class="flex justify-center gap-4">
+                            <div id="node-webapp" class="arch-card"><p class="font-semibold text-white">Web App</p><p class="tech-label">React, Next.js (SSR/SSG), GraphQL Client (Apollo/Relay), Tailwind CSS</p></div>
+                            <div id="node-vscode" class="arch-card"><p class="font-semibold text-white">IDE Extensions</p><p class="tech-label">TypeScript, VS Code Extension API, Language Server Protocol (LSP)</p></div>
+                            <div id="node-cli" class="arch-card"><p class="font-semibold text-white">CLI</p><p class="tech-label">Go, Cobra, Docker CLI Integration</p></div>
+                            <div id="node-api-presentation" class="arch-card"><p class="font-semibold text-white">Public API</p><p class="tech-label">REST, OpenAPI, Webhooks</p></div>
+                        </div>
+                    </div>
+                    <!-- Developer Framework & Marketplace -->
+                    <div class="arch-layer">
+                        <p class="layer-label">Developer Framework & Marketplace</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div id="node-plugins" class="arch-card">
+                                <p class="font-bold text-base">Plugin SDK</p>
+                                <p class="tech-label">Provides APIs for extending MITRA capabilities (e.g., new tools, custom workflows).</p>
+                            </div>
+                            <div id="node-marketplace" class="arch-card">
+                                <p class="font-bold text-base">Marketplace</p>
+                                <p class="tech-label">Discover and install community-built plugins and MCP connectors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Layer -->
+                <div class="arch-layer">
+                    <p class="layer-label highlight-blue">Application Layer</p>
+                    <div class="flex flex-col items-center space-y-4">
+                        <div id="node-api" class="arch-card w-1/2"><p class="font-semibold text-white">API Gateway</p><p class="tech-label">GraphQL (Apollo Federation), Node.js/FastAPI, NGINX/Envoy</p></div>
+                        <div class="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+                            <!-- Left: Governance -->
+                             <div class="space-y-4">
+                                <div id="node-saarathi" class="arch-card flex flex-col justify-center h-full">
+                                    <p class="font-bold text-base highlight-orange">SAARATHI</p>
+                                    <p class="text-xs text-gray-400">Human Governance (e.g., Approval Workflows, Policy Enforcement)</p>
+                                </div>
+                             </div>
+                            <!-- Middle: Orchestration -->
+                            <div id="node-orchestrator" class="arch-card flex flex-col justify-center h-full">
+                                <p class="font-bold text-base highlight-blue">Orchestrator Agent</p>
+                                <p class="tech-label">Python, FastAPI, Temporal.io (Workflow Engine), Kubernetes (K8s) for container orchestration</p>
+                            </div>
+                            <!-- Right: Core Services -->
+                            <div class="space-y-2">
+                                <div id="node-auth" class="arch-card text-sm"><p>Auth Service</p><p class="tech-label">Go, OAuth2, JWT, Keycloak/Auth0</p></div>
+                                <div id="node-billing" class="arch-card text-sm"><p>Billing Service</p><p class="tech-label">Node.js, Stripe API, PostgreSQL/MongoDB</p></div>
+                                <div id="node-logging" class="arch-card text-sm"><p>Logging & Metrics</p><p class="tech-label">Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana)</p></div>
+                                <div id="node-analytics" class="arch-card text-sm">
+                                    <p>Analytics & Insights</p>
+                                    <p class="tech-label">Spark, Flink, ML Models (TensorFlow/PyTorch), Kafka Streams</p>
+                                </div>
+                            </div>
+                            <!-- Security Layer -->
+                            <div class="arch-layer">
+                                <p class="layer-label highlight-red">Security</p>
+                                <div class="space-y-2">
+                                    <div id="node-threat-detection" class="arch-card text-sm"><p>Threat Detection</p><p class="tech-label">WAF, RASP, IDS/IPS</p></div>
+                                    <div id="node-secrets" class="arch-card text-sm"><p>Secrets Mgmt</p><p class="tech-label">HashiCorp Vault, AWS KMS</p></div>
+                                    <div id="node-iam" class="arch-card text-sm"><p>Identity & Access</p><p class="tech-label">OpenID Connect, SAML</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- MITRA Agent Framework -->
+                            <div id="mitra-framework" class="arch-layer mitra-container">
+                                <p class="layer-label highlight-purple">MITRA Framework</p>
+                                <div class="grid grid-cols-3 md:grid-cols-7 gap-2">
+                                    <div id="node-mitra-prod" class="arch-card text-xs"><p class="text-2xl">📝</p><p>Product</p></div>
+                                    <div id="node-mitra-arch" class="arch-card text-xs"><p class="text-2xl">🏗️</p><p>Architect</p></div>
+                                    <div id="node-mitra-dev" class="arch-card text-xs"><p class="text-2xl">💻</p><p>Developer</p></div>
+                                    <div id="node-mitra-qa" class="arch-card text-xs"><p class="text-2xl">✔️</p><p>QA</p></div>
+                                    <div id="node-mitra-sec" class="arch-card text-xs"><p class="text-2xl">🛡️</p><p>SecOps</p></div>
+                                    <div id="node-mitra-sre" class="arch-card text-xs"><p class="text-2xl">🚀</p><p>SRE</p></div>
+                                    <div id="node-mitra-ux" class="arch-card text-xs"><p class="text-2xl">🎨</p><p>UX</p></div>
+                                </div>
+                                <p class="tech-label mt-4 text-center">LLM Integration: OpenAI, Anthropic, Hugging Face (via API/SDK)</p>
+                            </div>
+                            <!-- Internal Service Connectors -->
+                            <div id="internal-connectors" class="arch-layer">
+                                <p class="layer-label">Internal Service Connectors</p>
+                                <div class="arch-card h-full flex flex-col justify-center">
+                                    <p class="font-bold text-base">Internal MITRA</p>
+                                    <p class="tech-label">Provides a lightweight, internal version of the MITRA framework for service-to-service communication and automation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integration Layer -->
+                <div class="arch-layer">
+                    <p class="layer-label highlight-green">Integration Layer</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div id="node-mcp" class="arch-card">
+                            <p class="font-bold text-base highlight-green">Model Context Protocol (MCP)</p>
+                            <p class="tech-label">gRPC, Protocol Buffers, Envoy Proxy (for secure, high-performance inter-service communication)</p>
+                        </div>
+                         <div id="node-message-bus" class="arch-card">
+                            <p class="font-bold text-base highlight-green">Message Bus</p>
+                            <p class="tech-label">RabbitMQ / Kafka (for asynchronous event-driven communication, pub/sub)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- External Systems & Infrastructure Layer -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <!-- Left side: External Systems -->
+                    <div class="arch-layer">
+                        <p class="layer-label">External Systems</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div id="node-tool-github" class="arch-card text-center text-xs"><p class="text-xl">📁</p><p>GitHub</p><p class="tech-label">GitHub API, Webhooks (for code events)</p></div>
+                            <div id="node-tool-jira" class="arch-card text-center text-xs"><p class="text-xl">📝</p><p>Jira</p><p class="tech-label">Jira API, OAuth (for task management)</p></div>
+                            <div id="node-tool-slack" class="arch-card text-center text-xs"><p class="text-xl">💬</p><p>Slack</p><p class="tech-label">Slack API, Bots (for notifications & interaction)</p></div>
+                            <div id="node-tool-vector" class="arch-card text-center text-xs"><p class="text-xl">🧠</p><p>Vector DB</p><p class="tech-label">Pinecone, Weaviate (for semantic search & context retrieval)</p></div>
+                            <div id="node-tool-sql" class="arch-card text-center text-xs"><p class="text-xl">🗃️</p><p>Postgres</p><p class="tech-label">SQL, ORM (SQLAlchemy/TypeORM) (for relational data)</p></div>
+                            <div id="node-tool-observability" class="arch-card text-center text-xs"><p class="text-xl">📊</p><p>Datadog</p><p class="tech-label">Datadog API, APM (for monitoring & tracing)</p></div>
+                        </div>
+                    </div>
+                    <!-- Right side: Cloud Infra -->
+                    <div class="arch-layer">
+                        <p class="layer-label">Cloud Infrastructure</p>
+                        <div class="grid grid-cols-3 gap-2">
+                             <div id="infra-aws" class="arch-card border border-yellow-500/50">
+                                <p class="font-bold text-white">AWS</p>
+                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">EKS Cluster, S3, Lambda, RDS (Managed DB)</div>
+                            </div>
+                             <div id="infra-azure" class="arch-card border border-blue-500/50">
+                                <p class="font-bold text-white">Azure</p>
+                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">AKS Cluster, Azure Blob Storage, Azure Functions (Serverless)</div>
+                            </div>
+                             <div id="infra-gcp" class="arch-card border border-green-500/50">
+                                <p class="font-bold text-white">GCP</p>
+                                 <div class="mt-2 p-1 bg-gray-900 rounded text-xs">GKE Cluster, Cloud Storage, Cloud Functions (Serverless)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function drawConnections() {
+            const canvas = document.getElementById('connector-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const container = canvas.parentElement;
+
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            
+            function getCoords(elementId) {
+                const el = document.getElementById(elementId);
+                if (!el) return null;
+                const rect = el.getBoundingClientRect();
+                const parentRect = container.getBoundingClientRect();
+                return {
+                    top: { x: rect.left - parentRect.left + rect.width / 2, y: rect.top - parentRect.top },
+                    bottom: { x: rect.left - parentRect.left + rect.width / 2, y: rect.bottom - parentRect.top },
+                    left: { x: rect.left - parentRect.left, y: rect.top - parentRect.top + rect.height / 2 },
+                    right: { x: rect.right - parentRect.left, y: rect.top - parentRect.top + rect.height / 2 },
+                };
+            }
+
+            function drawLine(from, to, color = '#30363d', dashed = false, curve = false) {
+                if (!from || !to) return; 
+                ctx.beginPath();
+                ctx.moveTo(from.x, from.y);
+                if(curve) {
+                    const cp1x = from.x;
+                    const cp1y = from.y + 60;
+                    const cp2x = to.x;
+                    const cp2y = to.y - 60;
+                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, to.x, to.y);
+                } else {
+                    ctx.lineTo(to.x, to.y);
+                }
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.5;
+                if (dashed) {
+                    ctx.setLineDash([6, 6]);
+                } else {
+                    ctx.setLineDash([]);
+                }
+                ctx.stroke();
+            }
+
+            // Connections
+            const webapp = getCoords('node-webapp');
+            const vscode = getCoords('node-vscode');
+            const cli = getCoords('node-cli');
+            const api = getCoords('node-api');
+            const orchestrator = getCoords('node-orchestrator');
+            const mitraFramework = getCoords('mitra-framework');
+            const internalConnectors = getCoords('internal-connectors');
+            const mcp = getCoords('node-mcp');
+            const messageBus = getCoords('node-message-bus');
+            const aws = getCoords('infra-aws');
+            const azure = getCoords('infra-azure');
+            const gcp = getCoords('infra-gcp');
+            const saarathi = getCoords('node-saarathi');
+            const logging = getCoords('node-logging');
+            const analytics = getCoords('node-analytics');
+            const publicApi = getCoords('node-api-presentation');
+            const plugins = getCoords('node-plugins');
+            const marketplace = getCoords('node-marketplace');
+            const threatDetection = getCoords('node-threat-detection');
+
+            // Presentation -> API
+            drawLine(webapp.bottom, api.top, '#58a6ff', false, true);
+            drawLine(vscode.bottom, api.top, '#58a6ff', false, true);
+            drawLine(cli.bottom, api.top, '#58a6ff', false, true);
+            drawLine(publicApi.bottom, api.top, '#58a6ff', false, true);
+
+            // Developer Framework -> API
+            drawLine(plugins.bottom, api.top, '#58a6ff', false, true);
+            drawLine(marketplace.bottom, api.top, '#58a6ff', false, true);
+            
+            // API -> Orchestrator
+            drawLine(api.bottom, orchestrator.top);
+
+            // API -> Security
+            drawLine(api.bottom, threatDetection.top, '#f85149', true);
+
+            // Orchestrator -> MITRA Framework
+            drawLine(orchestrator.bottom, mitraFramework.top);
+
+            // Orchestrator -> Internal Service Connectors
+            drawLine(orchestrator.bottom, internalConnectors.top);
+            
+            // MITRA Framework -> Integration Layer
+            drawLine(mitraFramework.bottom, mcp.top, '#8b949e');
+            drawLine(mitraFramework.bottom, messageBus.top, '#8b949e');
+
+            // Internal Service Connectors -> Integration Layer
+            drawLine(internalConnectors.bottom, mcp.top, '#8b949e', true);
+            drawLine(internalConnectors.bottom, messageBus.top, '#8b949e', true);
+
+            // SAARATHI -> Orchestrator
+            drawLine(saarathi.right, orchestrator.left, '#f78166', true);
+
+            // MCP -> External Systems
+            const tools = ['github', 'jira', 'slack', 'vector', 'sql', 'observability'];
+            tools.forEach(t => {
+                const toolNode = getCoords(`node-tool-${t}`);
+                drawLine(mcp.bottom, toolNode.top, '#3fb950', true);
+            });
+            
+            // Message Bus -> Cloud Infrastructure
+            drawLine(messageBus.bottom, aws.top, '#3fb950');
+            drawLine(messageBus.bottom, azure.top, '#3fb950');
+            drawLine(messageBus.bottom, gcp.top, '#3fb950');
+
+        }
+
+        // Initial draw and redraw on resize
+        window.addEventListener('load', drawConnections);
+        window.addEventListener('resize', drawConnections);
+
+    </script>
+</body>
+</html>
