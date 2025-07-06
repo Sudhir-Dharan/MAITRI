@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAITRI - Architecture Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Changed to height: 100vh */
+            margin: 0; /* Removed padding */
+        }
+        .container-bg {
+            background-color: #1a2b3c;
+            border: 1px solid #8b949e;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1rem; /* Reduced padding */
+            max-width: 1000px; /* Reduced max-width */
+            width: 100%;
+            max-height: 95vh; /* Added max-height */
+            overflow-y: auto; /* Added scroll for overflow */
+        }
+        .section-card {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 1rem; /* Reduced padding */
+            margin-bottom: 1rem; /* Reduced margin */
+        }
+        .section-title {
+            font-size: 1.5rem; /* Reduced font size */
+            font-weight: 700;
+            color: #58a6ff; /* Highlight blue */
+            margin-bottom: 0.75rem; /* Reduced margin */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .subsection-title {
+            font-size: 1.1rem; /* Reduced font size */
+            font-weight: 600;
+            color: #c9d1d9;
+            margin-bottom: 0.5rem; /* Reduced margin */
+            display: flex;
+            align-items: center;
+        }
+        .item-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.375rem;
+            padding: 0.5rem; /* Reduced padding */
+            text-align: center;
+            font-size: 0.8rem; /* Reduced font size */
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .item-card .lucide {
+            margin-bottom: 0.3rem; /* Reduced margin */
+            color: #58a6ff;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Adjusted minmax */
+            gap: 0.75rem; /* Reduced gap */
+        }
+        .saarathi-highlight {
+            border: 2px solid #ef4444; /* Red border */
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); /* Red glow */
+        }
+    </style>
+</head>
+<body>
+    <div class="container-bg">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-white mb-8">MAITRI: Architecture Overview</h1>
+
+        <!-- User Interfaces Layer -->
+        <div class="section-card">
+            <h2 class="section-title"><i data-lucide="monitor" class="mr-3 w-8 h-8"></i>External Interfaces</h2>
+            <div class="grid-container">
+                <div class="item-card">
+                    <i data-lucide="globe" class="w-6 h-6"></i>
+                    <span>Web Portal</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="store" class="w-6 h-6"></i>
+                    <span>Marketplace</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="terminal" class="w-6 h-6"></i>
+                    <span>SDK/CLI Tools</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Platform Layer -->
+        <div class="section-card">
+            <h2 class="section-title"><i data-lucide="cpu" class="mr-3 w-8 h-8"></i>Core Platform</h2>
+            <div class="item-card mb-4" style="width: calc(100% - 2rem); margin-left: 1rem; margin-right: 1rem;">
+                <i data-lucide="cloud" class="w-6 h-6"></i>
+                <span>API Gateway</span>
+            </div>
+            <div class="grid-container">
+                <div class="item-card">
+                    <i data-lucide="git-fork" class="w-6 h-6"></i>
+                    <span>Agentic Core Orchestration Engine</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="boxes" class="w-6 h-6"></i>
+                    <span>MITRA Modules</span>
+                </div>
+                <div class="item-card saarathi-highlight">
+                    <i data-lucide="user-check" class="w-6 h-6"></i>
+                    <span>Human-on-the-loop (SAARATHI)</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="settings" class="w-6 h-6"></i>
+                    <span>Platform Services</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="shield" class="w-6 h-6"></i>
+                    <span>Security Module</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="check-square" class="w-6 h-6"></i>
+                    <span>Compliance Module</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration & Data Layer -->
+        <div class="section-card">
+            <h2 class="section-title"><i data-lucide="plug" class="mr-3 w-8 h-8"></i>Integration & Data</h2>
+            <div class="grid-container">
+                <div class="item-card">
+                    <i data-lucide="message-square" class="w-6 h-6"></i>
+                    <span>Model Context Protocol (MCP)</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="git-pull-request" class="w-6 h-6"></i>
+                    <span>Message Bus</span>
+                </div>
+                <div class="item-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool w-6 h-6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2 2 0 0 1-2.83-2.83l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.77 3.77z"/></svg>
+                    <span>External Tool Integrations</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="database" class="w-6 h-6"></i>
+                    <span>Data Stores</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cloud Infrastructure Layer -->
+        <div class="section-card">
+            <h2 class="section-title"><i data-lucide="cloud" class="mr-3 w-8 h-8"></i>Cloud Infrastructure</h2>
+            <div class="grid-container">
+                <div class="item-card">
+                    <i data-lucide="server" class="w-6 h-6"></i>
+                    <span>Multi-Cloud Support</span>
+                </div>
+                <div class="item-card">
+                    <i data-lucide="hard-drive" class="w-6 h-6"></i>
+                    <span>Managed Services</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

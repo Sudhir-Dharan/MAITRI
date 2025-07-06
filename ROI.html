@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAITRI ROI Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom Slider Styles */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0; /* gray-200 */
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4f46e5; /* indigo-600 */
+            cursor: pointer;
+            border-radius: 9999px;
+            border: 2px solid white;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4f46e5; /* indigo-600 */
+            cursor: pointer;
+            border-radius: 9999px;
+            border: 2px solid white;
+        }
+        .animate-value {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">MAITRI ROI Simulator</h1>
+            <p class="mt-2 text-lg text-slate-600">Quantify the business value of Agentic AI in your workflow.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <!-- === INPUTS PANEL === -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-bold mb-6 text-slate-900 border-b pb-3">1. Your Project Parameters</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="teamSize" class="block text-sm font-medium text-slate-700">Team Size (Developers)</label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="teamSize" min="1" max="100" value="10" class="w-full">
+                            <span id="teamSizeValue" class="font-bold text-indigo-600 w-12 text-center">10</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="avgSalary" class="block text-sm font-medium text-slate-700">Average Developer Salary ($/year)</label>
+                        <input type="number" id="avgSalary" value="120000" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                    </div>
+                     <div>
+                        <label for="projectDuration" class="block text-sm font-medium text-slate-700">Initial Project Duration (Months)</label>
+                         <div class="flex items-center space-x-4">
+                            <input type="range" id="projectDuration" min="1" max="36" value="12" class="w-full">
+                            <span id="projectDurationValue" class="font-bold text-indigo-600 w-12 text-center">12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-bold mt-8 mb-6 text-slate-900 border-b pb-3">2. MAITRI Efficiency Levers</h2>
+                <p class="text-sm text-slate-500 mb-4">Adjust the projected efficiency gains MAITRI brings to each phase of your workflow.</p>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="codingGain" class="block text-sm font-medium text-slate-700">Coding & Refactoring Gain</label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="codingGain" min="0" max="90" value="55" class="w-full">
+                            <span id="codingGainValue" class="font-bold text-indigo-600 w-12 text-center">55%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="testingGain" class="block text-sm font-medium text-slate-700">Testing & QA Gain</label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="testingGain" min="0" max="90" value="75" class="w-full">
+                            <span id="testingGainValue" class="font-bold text-indigo-600 w-12 text-center">75%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="bugFixGain" class="block text-sm font-medium text-slate-700">Maintenance & Bug Fix Gain</label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="bugFixGain" min="0" max="90" value="60" class="w-full">
+                            <span id="bugFixGainValue" class="font-bold text-indigo-600 w-12 text-center">60%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATA SOURCES SECTION -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold text-slate-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-slate-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Data Sources for Projections
+                    </h3>
+                    <div class="mt-2 text-sm text-slate-600 space-y-2 bg-slate-100 p-4 rounded-lg border border-slate-200">
+                        <p class="mb-2">The default efficiency gains are based on the following public research:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>
+                                <strong>Coding & Refactoring (55%):</strong> Based on GitHub's study on Copilot, showing a 55.8% increase in task completion speed. 
+                                <a href="https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity/" target="_blank" class="text-indigo-600 hover:underline font-medium">Source</a>
+                            </li>
+                            <li>
+                                <strong>Testing & QA (75%):</strong> A conservative estimate from studies like Virtuoso's, which show >90% reduction in regression testing time.
+                                <a href="https://www.virtuoso.qa/case-studies/hysolate-reduces-regression-testing-from-days-to-hours" target="_blank" class="text-indigo-600 hover:underline font-medium">Source</a>
+                            </li>
+                            <li>
+                                <strong>Maintenance & Bug Fix (60%):</strong> Derived from research by AWS showing CodeWhisperer users write more secure code, reducing future bugs.
+                                <a href="https://aws.amazon.com/blogs/machine-learning/amazon-codewhisperer-is-27-more-likely-to-get-you-to-a-solution-and-helps-you-complete-tasks-57-faster/" target="_blank" class="text-indigo-600 hover:underline font-medium">Source</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- === OUTPUTS PANEL === -->
+            <div class="lg:col-span-3">
+                <!-- Core Business Value Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg text-center border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wider">Time-to-Market</h3>
+                        <p id="timeToMarketValue" class="text-4xl font-extrabold text-green-600 mt-2 animate-value">-</p>
+                        <p id="timeToMarketSavings" class="text-sm text-slate-600 mt-1 animate-value">-</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg text-center border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wider">Development Cost</h3>
+                        <p id="devCostValue" class="text-4xl font-extrabold text-green-600 mt-2 animate-value">-</p>
+                        <p id="devCostSavings" class="text-sm text-slate-600 mt-1 animate-value">-</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg text-center border border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wider">Productivity Gain</h3>
+                        <p id="productivityGainValue" class="text-4xl font-extrabold text-green-600 mt-2 animate-value">-</p>
+                        <p class="text-sm text-slate-600 mt-1">Overall Efficiency</p>
+                    </div>
+                </div>
+
+                <!-- Chart & Breakdown -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+                    <h2 class="text-2xl font-bold mb-4 text-slate-900">Workflow Transformation</h2>
+                    <div class="h-80 w-full">
+                        <canvas id="roiChart"></canvas>
+                    </div>
+                    <div class="mt-6 border-t pt-4">
+                         <h3 class="text-lg font-semibold text-slate-800">Summary of Savings</h3>
+                         <div class="mt-2 space-y-2 text-slate-700">
+                             <div class="flex justify-between">
+                                 <span>Initial Total Developer Hours:</span>
+                                 <span id="initialHours" class="font-bold">-</span>
+                             </div>
+                             <div class="flex justify-between">
+                                 <span>MAITRI Total Developer Hours:</span>
+                                 <span id="maitriHours" class="font-bold text-indigo-600">-</span>
+                             </div>
+                             <div class="flex justify-between border-t mt-2 pt-2">
+                                 <span class="font-semibold">Total Hours Saved:</span>
+                                 <span id="hoursSaved" class="font-bold text-green-600">-</span>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-12 text-sm text-slate-500">
+            <p>This simulator provides an estimate based on industry data and your inputs. Actual results may vary.</p>
+        </footer>
+    </div>
+
+    <script>
+        // === CHART SETUP ===
+        const ctx = document.getElementById('roiChart').getContext('2d');
+        let roiChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Coding', 'Testing', 'Maintenance'],
+                datasets: [
+                    {
+                        label: 'Before MAITRI (Hours)',
+                        data: [],
+                        backgroundColor: '#94a3b8', // slate-400
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'With MAITRI (Hours)',
+                        data: [],
+                        backgroundColor: '#4f46e5', // indigo-600
+                        borderRadius: 6,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Developer Hours per Phase'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat().format(context.parsed.y) + ' hours';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // === DOM ELEMENT REFERENCES ===
+        const inputs = {
+            teamSize: document.getElementById('teamSize'),
+            avgSalary: document.getElementById('avgSalary'),
+            projectDuration: document.getElementById('projectDuration'),
+            codingGain: document.getElementById('codingGain'),
+            testingGain: document.getElementById('testingGain'),
+            bugFixGain: document.getElementById('bugFixGain'),
+        };
+
+        const values = {
+            teamSize: document.getElementById('teamSizeValue'),
+            projectDuration: document.getElementById('projectDurationValue'),
+            codingGain: document.getElementById('codingGainValue'),
+            testingGain: document.getElementById('testingGainValue'),
+            bugFixGain: document.getElementById('bugFixGainValue'),
+        };
+
+        const outputs = {
+            timeToMarketValue: document.getElementById('timeToMarketValue'),
+            timeToMarketSavings: document.getElementById('timeToMarketSavings'),
+            devCostValue: document.getElementById('devCostValue'),
+            devCostSavings: document.getElementById('devCostSavings'),
+            productivityGainValue: document.getElementById('productivityGainValue'),
+            initialHours: document.getElementById('initialHours'),
+            maitriHours: document.getElementById('maitriHours'),
+            hoursSaved: document.getElementById('hoursSaved'),
+        };
+
+        // === CORE CALCULATION LOGIC ===
+        function calculateROI() {
+            // 1. Get all input values
+            const teamSize = parseFloat(inputs.teamSize.value);
+            const avgSalary = parseFloat(inputs.avgSalary.value);
+            const projectDuration = parseFloat(inputs.projectDuration.value);
+            const codingGain = parseFloat(inputs.codingGain.value) / 100;
+            const testingGain = parseFloat(inputs.testingGain.value) / 100;
+            const bugFixGain = parseFloat(inputs.bugFixGain.value) / 100;
+
+            // 2. Define baseline workflow assumptions
+            const workflowSplit = {
+                coding: 0.50,
+                testing: 0.25,
+                bugFix: 0.25,
+            };
+
+            // 3. Calculate "Before MAITRI" metrics
+            const hoursPerDevPerMonth = 160;
+            const totalInitialHours = teamSize * projectDuration * hoursPerDevPerMonth;
+            const initialCost = teamSize * (avgSalary / 12) * projectDuration;
+
+            const initialPhaseHours = {
+                coding: totalInitialHours * workflowSplit.coding,
+                testing: totalInitialHours * workflowSplit.testing,
+                bugFix: totalInitialHours * workflowSplit.bugFix,
+            };
+
+            // 4. Calculate "With MAITRI" metrics
+            const maitriPhaseHours = {
+                coding: initialPhaseHours.coding * (1 - codingGain),
+                testing: initialPhaseHours.testing * (1 - testingGain),
+                bugFix: initialPhaseHours.bugFix * (1 - bugFixGain),
+            };
+            
+            const totalMaitriHours = Object.values(maitriPhaseHours).reduce((a, b) => a + b, 0);
+            const totalHoursSaved = totalInitialHours - totalMaitriHours;
+            const productivityGain = (totalHoursSaved / totalInitialHours);
+            
+            const newProjectDuration = (totalMaitriHours / (teamSize * hoursPerDevPerMonth));
+            const newCost = teamSize * (avgSalary / 12) * newProjectDuration;
+            const costSavings = initialCost - newCost;
+
+            // 5. Update UI
+            updateUI(newProjectDuration, projectDuration, newCost, initialCost, costSavings, productivityGain, totalInitialHours, totalMaitriHours, totalHoursSaved, initialPhaseHours, maitriPhaseHours);
+        }
+
+        // === UI UPDATE LOGIC ===
+        function updateUI(newDuration, oldDuration, newCost, oldCost, costSavings, productivityGain, initialHours, maitriHours, hoursSaved, initialPhaseHours, maitriPhaseHours) {
+            const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+            const formatNumber = (val) => new Intl.NumberFormat('en-US').format(Math.round(val));
+            
+            // Core KPIs - Reverted to show absolute values
+            outputs.timeToMarketValue.textContent = `${newDuration.toFixed(1)} mos`;
+            outputs.timeToMarketSavings.textContent = `Saved ${(oldDuration - newDuration).toFixed(1)} months`;
+            
+            outputs.devCostValue.textContent = formatCurrency(newCost);
+            outputs.devCostSavings.textContent = `Saved ${formatCurrency(costSavings)}`;
+
+            outputs.productivityGainValue.textContent = `${(productivityGain * 100).toFixed(0)}%`;
+
+            // Breakdown
+            outputs.initialHours.textContent = formatNumber(initialHours);
+            outputs.maitriHours.textContent = formatNumber(maitriHours);
+            outputs.hoursSaved.textContent = formatNumber(hoursSaved);
+
+            // Update Chart
+            roiChart.data.datasets[0].data = Object.values(initialPhaseHours);
+            roiChart.data.datasets[1].data = Object.values(maitriPhaseHours);
+            roiChart.update();
+        }
+
+
+        // === EVENT LISTENERS ===
+        Object.keys(inputs).forEach(key => {
+            inputs[key].addEventListener('input', () => {
+                // Update value displays for sliders
+                if (values[key]) {
+                    if (key.includes('Gain')) {
+                        values[key].textContent = `${inputs[key].value}%`;
+                    } else {
+                        values[key].textContent = inputs[key].value;
+                    }
+                }
+                calculateROI();
+            });
+        });
+
+        // Initial calculation on page load
+        window.onload = calculateROI;
+
+    </script>
+</body>
+</html>
