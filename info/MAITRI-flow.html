@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAITRI SDLC Infographic (Single Page)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevents scrolling */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a1e; /* Deep space blue */
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex-grow: 0;
+        }
+        .phase-card .flex-grow {
+            flex-grow: 0;
+        }
+        .saarathi-gate {
+            border-color: #f59e0b; /* Amber */
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+        }
+        .mitra-icon {
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+        }
+        .highlight-stat {
+            color: #34d399; /* Emerald green */
+            font-weight: 700;
+        }
+        .shift-left-highlight {
+            color: #f472b6; /* Pink */
+            font-weight: 600;
+        }
+        .phase-card {
+            background-color: rgba(17, 24, 39, 0.5); /* bg-gray-900/50 */
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(55, 65, 81, 0.5); /* border-gray-700/50 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .metric-box {
+            background-color: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(55, 65, 81, 0.5);
+        }
+    </style>
+</head>
+<body class="text-white antialiased">
+
+    <!-- Main Container -->
+    <div class="flex flex-col h-full max-w-screen-2xl mx-auto p-4 lg:p-6">
+
+        <!-- Header Section -->
+        <header class="text-center py-2">
+            <h1 class="text-3xl lg:text-4xl tracking-tightaligh bg-clip-text bg-gradient-to-r">The MAITRI Expressway</h1>
+            <p class="text-md lg:text-lg text-indigo-200/80"></p>
+        </header>
+
+        <!-- Phases Grid -->
+        <main class="main-content grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 py-4">
+
+            <!-- Phase 1: Idea & Conception -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">1. Idea & Conception</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agent: Product</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Market trend synthesis</li>
+                            <li>User story & PRD generation</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Define business goals</li>
+                            <li>Approve final PRD</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Role (Engaged)</h3>
+                        <p class="text-gray-400 pl-2 text-xs">Product Manager</p>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Approved PRD</li>
+                            <li>Initial User Stories</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">90% Faster</p>
+                    <p class="text-xs text-gray-400">Time to PRD</p>
+                </div>
+            </div>
+
+            <!-- Phase 2: Planning & Design -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="M21.28 10.34v3.32a2 2 0 0 1-2 2H4.72a2 2 0 0 1-2-2v-3.32a2 2 0 0 1 1.6-1.96l7.36-2.3a2 2 0 0 1 .88 0l7.36 2.3a2 2 0 0 1 1.6 1.96Z"/><path d="m12 18-6-3 6-3 6 3-6 3Z"/><path d="M12 6V4"/><path d="m6 15-3 1.5v3.32a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3.32L18 15"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">2. Planning & Design</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agents: Architecture & UX</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>System architecture design</li>
+                            <li>Wireframing & prototyping</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Approve tech stack & UX</li>
+                            <li>Ensure enterprise standards</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Roles (Engaged)</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Solutions Architect</li>
+                            <li>UX Lead</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Architecture Blueprints</li>
+                            <li>UX Wireframes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">100%</p>
+                    <p class="text-xs text-gray-400">Architecture Compliance</p>
+                </div>
+            </div>
+            
+            <!-- Phase 3: Development -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">3. Development</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agents: Dev & Security</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Code & unit test generation</li>
+                            <li>Live vulnerability scanning</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Review complex logic PRs</li>
+                            <li>Debug critical path issues</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Role (Engaged)</h3>
+                        <p class="text-gray-400 pl-2 text-xs">Lead Developer</p>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Clean, Tested Codebase</li>
+                            <li>Security Scan Reports</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">-40%</p>
+                    <p class="text-xs text-gray-400">Reduction in Coding Time</p>
+                </div>
+            </div>
+
+            <!-- Phase 4: Testing & QA -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">4. Testing & QA</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agent: QA</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>E2E test script generation</li>
+                            <li>Automated bug reporting</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Define UAT criteria</li>
+                            <li>Triage & prioritize bugs</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Role (Engaged)</h3>
+                        <p class="text-gray-400 pl-2 text-xs">QA Engineer</p>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Comprehensive Test Reports</li>
+                            <li>Verified Bug Fixes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">98%</p>
+                    <p class="text-xs text-gray-400">Defect Detection Rate</p>
+                </div>
+            </div>
+
+            <!-- Phase 5: Deployment -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.05A7.5 7.5 0 0 0 8 10c-1.66 0-3 1.34-3 3 0 .34.06.66.17.95.18.49.45.92.78 1.3Z"/><path d="M12.5 10.5c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.7 2.3-.05 3.05A7.5 7.5 0 0 0 9 14c1.66 0 3-1.34 3-3 0-.34-.06-.66-.17-.95-.18-.49-.45-.92-.78-1.3Z"/><path d="M19 17c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1v-2c0-.6.4-1 1-1h14Z"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">5. Deployment</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agent: Operations</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>CI/CD management</li>
+                            <li>Canary & blue-green deploys</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Approve production "Go-Live"</li>
+                            <li>Monitor initial release health</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Role (Engaged)</h3>
+                        <p class="text-gray-400 pl-2 text-xs">Release Manager</p>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Deployed Artifacts</li>
+                            <li>Deployment Reports</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">&lt;5%</p>
+                    <p class="text-xs text-gray-400">Change Failure Rate</p>
+                </div>
+            </div>
+
+            <!-- Phase 6: Maintenance -->
+            <div class="phase-card p-4 rounded-2xl">
+                <div class="text-center mb-3">
+                    <div class="inline-block p-3 rounded-full bg-indigo-600/20"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="3" y="16" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/></svg></div>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-3 text-center">6. Maintenance</h2>
+                <div class="flex-grow grid grid-rows-4 auto-rows-fr gap-y-2 text-sm">
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-indigo-300">Agent: Operations</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>24/7 autonomous monitoring</li>
+                            <li>Proactive incident resolution</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-amber-300">Human Intervention</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Declare major incidents</li>
+                            <li>Conduct post-mortems</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-gray-300">Human Role (Engaged)</h3>
+                        <p class="text-gray-400 pl-2 text-xs">SRE/Ops Engineer</p>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <h3 class="font-semibold text-purple-300">Deliverables</h3>
+                        <ul class="list-disc list-inside text-gray-400 pl-2 text-xs">
+                            <li>Incident Reports</li>
+                            <li>System Health Metrics</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="metric-box p-2 rounded-b-lg text-center mt-3">
+                    <p class="text-2xl font-bold text-emerald-400">&lt;15 min</p>
+                    <p class="text-xs text-gray-400">Mean Time To Resolution</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer / Conclusion -->
+        <footer class="py-2 text-center">
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <div class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <p class="font-semibold">Accelerated Velocity</p>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <p class="font-semibold">Drastic Cost Reduction</p>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-300"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <p class="font-semibold">Trust by Design</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
