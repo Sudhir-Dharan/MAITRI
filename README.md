@@ -18,12 +18,12 @@ You can access the live demo here: [https://sudhir-dharan.github.io/MAITRI/](htt
 
 ## Information Pages
 
-*   [Architecture](https://sudhir-dharan.github.io/MAITRI/info/architecture.html)
-*   [Content Architecture](https://sudhir-dharan.github.io/MAITRI/info/content_arch.html)
-*   [FAQ](https://sudhir-dharan.github.io/MAITRI/info/faq.html)
-*   [MAITRI Flow](https://sudhir-dharan.github.io/MAITRI/info/MAITRI-flow.html)
 *   [Problem Statement](https://sudhir-dharan.github.io/MAITRI/info/problem.html)
-*   [ROI](https://sudhir-dharan.github.io/MAITRI/info/ROI.html)
+*   [Architecture - Detailed](https://sudhir-dharan.github.io/MAITRI/info/architecture.html)
+*   [Architecture - Summarized](https://sudhir-dharan.github.io/MAITRI/info/content_arch.html)
+*   [Flow](https://sudhir-dharan.github.io/MAITRI/info/MAITRI-flow.html)
+*   [ROI Simulator](https://sudhir-dharan.github.io/MAITRI/info/ROI.html)
+*   [FAQ](https://sudhir-dharan.github.io/MAITRI/info/faq.html)
 
 ## Running the application
 
