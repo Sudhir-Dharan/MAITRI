@@ -13,16 +13,17 @@ All of this is governed through the SAARATHI Console, a sophisticated Human-in-t
 
 ## Demo
 
-You can access the live demo here: [https://sudhir-dharan.github.io/MITRA/](https://sudhir-dharan.github.io/MITRA/)
+You can access the live demo here: [https://sudhir-dharan.github.io/MITRA/](https://sudhir-dharan.github.io/MAITRI/)
+
 
 ## Information Pages
 
-*   [Architecture](https://sudhir-dharan.github.io/MITRA/info/architecture.html)
-*   [Content Architecture](https://sudhir-dharan.github.io/MITRA/info/content_arch.html)
-*   [FAQ](https://sudhir-dharan.github.io/MITRA/info/faq.html)
-*   [MAITRI Flow](https://sudhir-dharan.github.io/MITRA/info/MAITRI-flow.html)
-*   [Problem Statement](https://sudhir-dharan.github.io/MITRA/info/problem.html)
-*   [ROI](https://sudhir-dharan.github.io/MITRA/info/ROI.html)
+*   [Architecture](https://sudhir-dharan.github.io/MAITRI/info/architecture.html)
+*   [Content Architecture](https://sudhir-dharan.github.io/MAITRI/info/content_arch.html)
+*   [FAQ](https://sudhir-dharan.github.io/MAITRI/info/faq.html)
+*   [MAITRI Flow](https://sudhir-dharan.github.io/MAITRI/info/MAITRI-flow.html)
+*   [Problem Statement](https://sudhir-dharan.github.io/MAITRI/info/problem.html)
+*   [ROI](https://sudhir-dharan.github.io/MAITRI/info/ROI.html)
 
 ## Running the application
 
