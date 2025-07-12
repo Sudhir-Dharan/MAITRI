@@ -12,7 +12,7 @@ All of this is governed through the SAARATHI (Strategic Approval and Audited Rea
 
 ## Demo
 
-You can access the [live demo](https://sudhir-dharan.github.io/MAITRI/).
+You can access the [concept demo](https://sudhir-dharan.github.io/MAITRI/).
 
 
 ## Information Pages
