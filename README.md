@@ -13,7 +13,7 @@ All of this is governed through the SAARATHI Console, a sophisticated Human-in-t
 
 ## Demo
 
-You can access the live demo here: [https://sudhir-dharan.github.io/MAITRI/](https://sudhir-dharan.github.io/MAITRI/)
+You can access the [live demo](https://sudhir-dharan.github.io/MAITRI/).
 
 
 ## Information Pages
