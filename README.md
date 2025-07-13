@@ -8,7 +8,7 @@ This is not another AI coding assistant. MAITRI is a comprehensive operating sys
 * Test & Secure: Use QA and SecOps agents to ensure quality and security.
 * Deploy & Monitor: Allow SRE agents to manage releases and production environments.
 
-All of this is governed through the SAARATHI (Strategic Approval and Audited Reasoning Authority with Thresholded Human Interface) Console, a sophisticated Human-in-the-Loop (HITL) interface that provides the transparency, auditable control, and security that enterprises demand. Welcome to the future of software development.
+All of this is governed through the SAARATHI (Strategic Approval and Audited Reasoning Authority with Thresholded Human Interface) Console, a sophisticated Human-on-the-Loop (HOTL) interface that provides the transparency, auditable control, and security that enterprises demand. Welcome to the future of software development.
 
 ## Demo
 
